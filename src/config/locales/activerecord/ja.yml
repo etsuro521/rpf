@@ -1,0 +1,16 @@
+ja:
+ activerecord:
+  attributes:
+    task:
+      title: 'タスク'
+      deadline: '期限'
+      urgency_importance: '重要度・緊急度'
+      status: 'ステータス'
+      notes: '備考'
+    user:
+      name: 'ユーザー名'
+      email: 'メールアドレス'
+      password: 'パスワード'
+      password_confirmation: 'パスワード再入力'
+    session:
+      email: 'メールアドレス'

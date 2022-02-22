@@ -1,0 +1,38 @@
+// Place all the styles related to the static_pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@mixin box_sizing {
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:         border-box;
+}
+
+a.task{
+    margin-bottom: 2.5px;
+    clear: both;
+    float: left;
+    width: 100%;
+    @include box_sizing;
+    border: 1px solid rgb(139, 138, 138);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.scroll-bar .pagination {
+    display: none;
+}
+
+.scroll-bar{
+ 	overflow: scroll; 
+    height: 600px;
+}
+
+.col-md-4 {
+    text-align: center;
+    .title{
+        display: inline-block;
+        padding: auto 10px;
+        border-radius: 5px;
+    }
+}

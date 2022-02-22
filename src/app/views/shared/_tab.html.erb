@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs">
+    <li role="presentation" class=<%= 'active' if request.original_url == root_url %> >   
+        <%= link_to 'Home', root_path, class:"nav-link "%>
+    </li>
+    <li role="presentation" class=<%= 'active' if request.original_url == tasks_url or request.original_url.include?('tasks?page') %>>
+        <%= link_to 'All Task', tasks_path, class:"nav-link " %>
+    </li>
+    <li role="presentation" class=<%= 'active' if request.original_url == new_task_url %>>
+        <%= link_to 'Create Task', new_task_path, class:"nav-link" %>
+    </li>
+</ul>

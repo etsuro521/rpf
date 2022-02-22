@@ -1,0 +1,31 @@
+<%= render 'shared/tab' %>
+
+<%= form_with(model: @task, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title, class: 'form-control' %>
+
+  <%= f.label :deadline %>
+  <%= f.datetime_field :deadline, class: 'form-control' %>
+
+  <%= f.label :urgency_importance %>
+  <%= f.select :urgency_importance, ["A","B","C","D"], class: 'form-control' %>
+
+  <%= f.label :status %>
+  <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
+  
+  <%= f.label :notes %>
+  <%= f.text_area :notes, class: 'form-control' %>
+
+  <div>
+    <%= @task.created_at %>
+    <%= @task.updated_at %>
+  </div>
+
+  <%= f.submit "変更を保存する", class: "btn btn-primary" %>
+<% end %>
+<% if current_user?(@task.user) %>
+  <%= link_to "タスクを削除", @task, method: :delete, data: { confirm: "削除しますか?" } %>
+<% end %>
+<button onclick="history.back()" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
