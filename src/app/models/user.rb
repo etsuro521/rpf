@@ -1,5 +1,11 @@
 class User < ApplicationRecord
+    has_many :user_groups, dependent: :destroy
+    has_many :join_groups, through: :user_groups, source: :group, dependent: :destroy
+    has_many :user_teams, dependent: :destroy
+    has_many :join_teams, through: :user_teams,source: :team, dependent: :destroy
     has_many :tasks, dependent: :destroy
+    has_many :task_groups, through: :tasks, source: :group, dependent: :destroy
+
     attr_accessor :remember_token
     before_save { self.email = email.downcase }
     validates :name, presence: true, length: { maximum: 50 }
@@ -34,4 +40,5 @@ class User < ApplicationRecord
     def forget
         update_attribute(:remember_digest, nil)
     end
+
 end

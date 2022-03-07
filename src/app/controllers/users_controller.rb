@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-
   before_action :logged_in_user, only: [:show, :edit, :update]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:show, :edit, :update]
 
   def new
     if logged_in?
@@ -13,6 +12,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @groups = @user.join_groups
   end
 
   def create
@@ -20,7 +20,10 @@ class UsersController < ApplicationController
     if @user.save
         log_in @user
         flash[:success] = "Welcome to the Sample App!"
-        redirect_to root_path
+        @mytask = @user.join_groups.create(name:'マイタスク')
+        remember_group(@mytask)
+        cookies.permanent.signed[:change] = "0"
+        render 'static_pages/confirm'
     else
       render 'new'
     end
@@ -47,6 +50,6 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to root_path unless current_user?(@user) 
     end
 end

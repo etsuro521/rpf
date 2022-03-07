@@ -1,13 +1,24 @@
 
 <section class="user_info">
-    <h1>
-        <%= current_user.name %>
-    </h1>
-    <ul class="">
-        <li><%= link_to "Profile", current_user %></li>
-        <li><%= link_to "Settings", edit_user_path(current_user)  %></li>
-        <li>
-            <%= link_to "Log out", logout_path, method: :delete %>
-        </li>
-    </ul>
+    <% unless %w[tasks root new_task confirm].any? {|name| current_page?(send("#{name}_path"))} %>
+        <p><%= link_to 'Task管理画面に戻る', root_path %></p>
+    <% end %>
+    <li><%= link_to current_user.name, current_user %></li>
+    <% if %w[tasks root new_task new_team].any? {|name| current_page?(send("#{name}_path"))} %>
+        <li><%= link_to current_group.name, current_user %></li>
+    <% end %>
+    <% if !my_task?() %>
+        <li>Teams</li>
+        <span><%= link_to "チームを作成", new_team_path %></span>
+        <% my_teams.each do |team| %>
+            <%= form_with(url:change_team_path(team), local: true) do |f| %>
+                <div><%= hidden_field_tag :team_id, team.id %></div>
+                <% if current_team.name == team.name %>
+                    <%= f.submit team.name, class:'btn-danger'%>
+                <% else %>
+                    <%= f.submit team.name %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
 </section>

@@ -14,9 +14,24 @@
 
         <%= f.label :status %>
         <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
+
+        <% if !my_task?() %>
+                <%= f.label :from %>
+                <%= f.collection_select :from, current_group.members, :id, :name,{include_blank: true}, {class: 'form-control'} %>
+
+                <%= f.label :to %>
+                <%= f.collection_select :to, current_group.members, :id, :name,{selected:current_user.id}, {class: 'form-control'} %>
+        <% end %>
         
         <%= f.label :notes %>
         <%= f.text_area :notes, class: 'form-control' %>
+
+        <%= f.hidden_field :group_id, value:current_group.id %>
+
+        <% if has_teams?() %>
+                <%= f.label :team_id %>
+                <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
+        <% end %>
 
         <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>

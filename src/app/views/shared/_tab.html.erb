@@ -1,11 +1,37 @@
 <ul class="nav nav-tabs">
-    <li role="presentation" class=<%= 'active' if request.original_url == root_url %> >   
+    <li role="presentation" class=<%= 'active' if current_page?(root_path) %> >   
         <%= link_to 'Home', root_path, class:"nav-link "%>
     </li>
-    <li role="presentation" class=<%= 'active' if request.original_url == tasks_url or request.original_url.include?('tasks?page') %>>
+    <li role="presentation" class=<%= 'active' if current_page?(tasks_path) %>>
         <%= link_to 'All Task', tasks_path, class:"nav-link " %>
     </li>
-    <li role="presentation" class=<%= 'active' if request.original_url == new_task_url %>>
+    <li role="presentation" class=<%= 'active' if current_page?(new_task_path) %>>
         <%= link_to 'Create Task', new_task_path, class:"nav-link" %>
     </li>
+    <% if has_teams?() %>
+        <li role="presentation" class=<%= 'active' if current_page?(team_path(current_team)) %>>
+            <%= link_to 'チーム詳細', team_path(current_team), class:"nav-link" %>
+        </li>
+    <% end %>
+    <% if !my_task?() %>
+        <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                タスク切替 <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <%= form_with(url:change_tasks_path, method: :get, local: true) do |f| %>
+                        <div><%= hidden_field_tag :change, 1 %></div>
+                        <%= f.submit "自分のタスクを表示", class: "btn btn-primary" %>
+                    <% end %>
+                </li>
+                <li>
+                    <%= form_with(url:change_tasks_path, method: :get, local: true) do |f| %>
+                        <div><%= hidden_field_tag :change, 0 %></div>
+                        <%= f.submit "#{current_team.name}のタスクを表示", class: "btn btn-primary" %>
+                    <% end %>
+                </li>
+            </ul>
+        </li>
+    <% end %>
 </ul>

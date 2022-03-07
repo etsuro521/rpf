@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_024441) do
+ActiveRecord::Schema.define(version: 2022_03_04_132731) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 2022_02_16_024441) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id"
@@ -42,8 +48,45 @@ ActiveRecord::Schema.define(version: 2022_02_16_024441) do
     t.string "urgency_importance"
     t.string "status"
     t.text "notes"
+    t.bigint "group_id"
+    t.string "to"
+    t.string "from"
+    t.bigint "team_id"
+    t.index ["group_id"], name: "index_tasks_on_group_id"
+    t.index ["team_id"], name: "index_tasks_on_team_id"
     t.index ["user_id", "created_at"], name: "index_tasks_on_user_id_and_created_at"
+    t.index ["user_id", "group_id"], name: "index_tasks_on_user_id_and_group_id"
+    t.index ["user_id", "team_id"], name: "index_tasks_on_user_id_and_team_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_teams_on_group_id"
+  end
+
+  create_table "user_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "admin", default: false, null: false
+    t.index ["group_id"], name: "index_user_groups_on_group_id"
+    t.index ["user_id", "group_id"], name: "index_user_groups_on_user_id_and_group_id", unique: true
+    t.index ["user_id"], name: "index_user_groups_on_user_id"
+  end
+
+  create_table "user_teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_user_teams_on_team_id"
+    t.index ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true
+    t.index ["user_id"], name: "index_user_teams_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -57,5 +100,12 @@ ActiveRecord::Schema.define(version: 2022_02_16_024441) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "tasks", "groups"
+  add_foreign_key "tasks", "teams"
   add_foreign_key "tasks", "users"
+  add_foreign_key "teams", "groups"
+  add_foreign_key "user_groups", "groups"
+  add_foreign_key "user_groups", "users"
+  add_foreign_key "user_teams", "teams"
+  add_foreign_key "user_teams", "users"
 end

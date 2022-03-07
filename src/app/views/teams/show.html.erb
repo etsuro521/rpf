@@ -1,0 +1,20 @@
+<%= render 'shared/tab' %>
+
+<%= @team.name %>
+<%= link_to "チームを削除", team_path(@team), method: :delete, data: {confirm: "チームを削除するとタスクまで削除されます。よろしいですか。"} %>
+<h3>メンバー</h3>
+<%= link_to 'ユーザーを追加',search_team_path(@team) %>
+<table class="table">
+    <tbody>
+        <% @members.each do |member| %>
+            <tr>
+                <th scope="row"><%= member.name %></th> 
+                <td>
+                    <%= form_with(model: member.user_teams.find_by(team_id:@team.id),html: { method: :delete }, local: true) do |f| %>
+                        <%= f.submit "退会させる", class: "btn btn-default" %>
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,4 @@
+<%= render 'shared/tab' %>
+<h3><%= @team.name %>に所属するユーザーがいません<br>このグループを削除しますか？</h3>
+<%= link_to "Yes", team_path(@team), method: :delete, data: {confirm: "チームを削除するとタスクまで削除されます。よろしいですか。"} %>
+<%= link_to "No", root_path %>

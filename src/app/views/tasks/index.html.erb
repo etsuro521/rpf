@@ -5,18 +5,26 @@
   <thead>
     <tr>
       <th scope="col">Task</th>
-      <th scope="col">Deadline</th>
-      <th scope="col">緊急度・重要度</th>
+      <% if cookies.permanent.signed[:change] == "0" && !my_task?() %>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
+      <% end %>
+      <th scope="col">優先順位</th>
       <th scope="col">ステータス</th>
+      <th scope="col">Deadline</th>
     </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
       <tr class=<%= progress task %>>
         <th scope="row"><%= link_to task.title, edit_task_path(task) %></th>
-        <td><%= link_to task.deadline, edit_task_path(task) %></td>
+        <% if cookies.permanent.signed[:change] == "0" && !my_task?() %>
+          <td><%= link_to from(task), edit_task_path(task) %></td>
+          <td><%= link_to to(task), edit_task_path(task) %></td>
+        <% end %>
         <td><%= link_to task.urgency_importance, edit_task_path(task) %></td>
         <td><%= link_to task.status, edit_task_path(task) %></td>
+        <td><%= link_to task.deadline, edit_task_path(task) %></td>
       </tr>
     <% end %>
   </tbody>

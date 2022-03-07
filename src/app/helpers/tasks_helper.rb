@@ -10,4 +10,12 @@ module TasksHelper
         
         end        
     end
+
+    def from(task)
+        name = task.from.empty? ? "" : User.find(task.from).name
+    end
+
+    def to(task)
+        User.find(task.to).name
+    end
 end

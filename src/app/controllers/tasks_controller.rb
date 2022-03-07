@@ -4,8 +4,15 @@ class TasksController < ApplicationController
 
     def index
         store_location
-        @user = current_user
-        @tasks = @user.tasks.paginate(page:params[:page])
+        if my_task?()
+            @tasks = current_group.tasks.order(updated_at: :asc).paginate(page: params[:page])
+        else
+            if cookies.permanent.signed[:change] == "0"
+                @tasks = current_team.tasks.order(updated_at: :asc).paginate(page: params[:page])
+            else
+                @tasks = current_team.tasks.where(to:current_user.id).order(updated_at: :asc).paginate(page: params[:page])
+            end
+        end
     end
 
     def new
@@ -41,10 +48,15 @@ class TasksController < ApplicationController
         redirect_to root_url
     end
 
+    def change
+        cookies.permanent.signed[:change] = params[:change]
+        redirect_to session[:forwarding_url]
+    end
+
     private
 
         def task_params
-            params.require(:task).permit(:title, :deadline, :urgency_importance, :status, :notes)
+            params.require(:task).permit(:title, :deadline, :urgency_importance, :status, :notes, :group_id,:team_id, :to, :from)
         end
 
         def correct_user

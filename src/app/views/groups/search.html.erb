@@ -1,0 +1,37 @@
+<div class="search">
+    <%= form_with(model: @user,url:search_group_path, method: :get, local: true) do |f| %>
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+        <%= f.submit '検索する', class: "btn btn-primary" %>
+    <% end %>
+</div>
+
+<% if @result_users %>
+    <div class="result">
+        <h5>Search Terms: <%= @keywords %></h5>
+        <% if !@result_users.blank? %>
+            <table class="table">
+                <tbody>
+                    <% @result_users.each do |user| %>
+                        <tr>
+                            <th scope="row"><%= user.name %></th>
+                            <td><%= user.email %></td>
+                            <td>
+                                <% if @group.user_added?(user) %>
+                                    <%= form_with(url:add_group_path, local: true) do |f| %>
+                                        <div><%= hidden_field_tag :user_id, user.id %></div>
+                                        <%= f.submit "メンバーに追加", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@group.name}に追加しますか？" }  %>
+                                    <% end %>
+                                <% elsif %>
+                                    メンバー
+                                <% end %>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        <% else %>
+            該当するユーザーが見つかりません
+        <% end %>
+    </div>  
+<% end %>

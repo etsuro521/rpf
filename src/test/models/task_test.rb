@@ -3,7 +3,7 @@ require 'test_helper'
 class TaskTest < ActiveSupport::TestCase
   def setup
     @user = users(:michael)
-    @task = @user.tasks.build(title: 'task1',deadline: DateTime.now+1,urgency_importance: '4', status: '未着手')
+    @task = @user.tasks.build(title: 'task1',deadline: DateTime.now+1,urgency_importance: 'A', status: '未着手')
   end
 
   test "should be valid" do
