@@ -6,6 +6,7 @@ class Task < ApplicationRecord
   default_scope -> { order(updated_at: :DESC) }
   with_options presence: true do
     validates :user_id
+    validates :group_id
     validates :title, length: { maximum: 255 }
     validates :deadline
     validates :urgency_importance, inclusion: { in: %w(A B C D) }

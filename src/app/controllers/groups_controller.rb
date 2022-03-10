@@ -14,6 +14,7 @@ class GroupsController < ApplicationController
             remember_group(@group)
             @team = @group.teams.create(name:'general')
             @team.members << current_user
+            remember_team(@team)
             if first_group?(current_user)
                 redirect_to root_path
             else
@@ -58,6 +59,7 @@ class GroupsController < ApplicationController
     def change
         group = Group.find(params[:group_id])
         remember_group(group)
+        remember_team(group.teams.find_by(name:'general'))
         redirect_to current_user
     end
 
@@ -84,6 +86,15 @@ class GroupsController < ApplicationController
     private
         def group_params
             params.require(:group).permit(:name)
+        end
+
+        def group_admin_user
+            @user_group = current_user.user_groups.find_by(group_id:params[:id])
+            admin = @user_group.nil? ? false : @user_group.admin
+            unless admin
+                flash[:danger] = 'このグループの管理者ではありません'
+                redirect_to current_user 
+            end
         end
         
 end

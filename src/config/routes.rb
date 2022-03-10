@@ -24,6 +24,6 @@ Rails.application.routes.draw do
       get :search, :confirm
     end
   end
-  resources :user_teams
+  resources :user_teams, only: [:destroy]
 end
 

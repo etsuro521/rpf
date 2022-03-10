@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
     before_action :logged_in_user
-    before_action :correct_user, only: :destroy
+    before_action :my_task_destroy, only: :destroy
+    before_action :correct_user, except: [:index,:new,:create]
 
     def index
         store_location
@@ -59,8 +60,22 @@ class TasksController < ApplicationController
             params.require(:task).permit(:title, :deadline, :urgency_importance, :status, :notes, :group_id,:team_id, :to, :from)
         end
 
-        def correct_user
+        def my_task_destroy
             @task = current_user.tasks.find_by(id: params[:id])
             redirect_to root_url if @task.nil?
+        end
+
+        def correct_user
+            task = Task.find_by(id:params[:id])
+            group = Group.find_by(id:task.group_id)
+            team = Team.find_by(id:task.team_id)
+            if !group.members.exists?(current_user.id)
+                flash[:danger] = "タスクを管理するグループに所属していません"
+                redirect_to root_path
+            elsif team.nil? && !team.members.exists?(current_user.id)
+                flash[:danger] = "タスクを管理するチームに所属していません"
+                redirect_to root_path
+            end
+            
         end
 end

@@ -69,4 +69,12 @@ class TeamsController < ApplicationController
         def team_params
             params.require(:team).permit(:name)
         end
+
+        def user_added_team
+            @user_team = current_user.user_teams.find_by(team_id:params[:id])
+            if @user_team.nil?
+                flash[:danger] = 'このチームには所属していません'
+                redirect_to root_path  
+            end
+        end
 end

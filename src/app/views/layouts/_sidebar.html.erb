@@ -5,7 +5,11 @@
     <% end %>
     <li><%= link_to current_user.name, current_user %></li>
     <% if %w[tasks root new_task new_team].any? {|name| current_page?(send("#{name}_path"))} %>
-        <li><%= link_to current_group.name, current_user %></li>
+        <% if current_user.user_groups.find_by(group_id:current_group.id).admin %>
+            <li><%= link_to current_group.name,  current_group %></li>
+        <% else %>
+            <li><%= current_group.name %></li>
+        <% end %>
     <% end %>
     <% if !my_task?() %>
         <li>Teams</li>

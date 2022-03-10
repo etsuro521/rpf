@@ -21,7 +21,10 @@ class UsersController < ApplicationController
         log_in @user
         flash[:success] = "Welcome to the Sample App!"
         @mytask = @user.join_groups.create(name:'マイタスク')
+        @general = @mytask.teams.create(name:'general')
+        @general.members << @user
         remember_group(@mytask)
+        remember_team(@general)
         cookies.permanent.signed[:change] = "0"
         render 'static_pages/confirm'
     else

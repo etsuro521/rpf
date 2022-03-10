@@ -4,8 +4,10 @@ class Team < ApplicationRecord
     has_many :members, through: :user_teams,source: :user, dependent: :destroy
     has_many :tasks, dependent: :destroy
     has_many :tasks_users, through: :tasks, source: :user, dependent: :destroy
+    has_many :monthly_goals, dependent: :destroy
 
     validates :name, presence: true, length: { maximum: 255 }
+    validates :group_id, presence: true
 
     #teamを最初に作ったuserをteamに追加
     def add_first_user(user)

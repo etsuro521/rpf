@@ -12,10 +12,17 @@ module TasksHelper
     end
 
     def from(task)
-        name = task.from.empty? ? "" : User.find(task.from).name
+        if task.from.empty?
+            name = ""
+            return name
+        else
+            user = User.find_by(id:task.from)
+            name = user.nil? ? "" : user.name
+        end
     end
 
     def to(task)
-        User.find(task.to).name
+        user = User.find_by(id:task.to)
+        name = user.nil? ? "" : user.name
     end
 end

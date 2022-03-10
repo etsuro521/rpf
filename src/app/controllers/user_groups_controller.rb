@@ -42,5 +42,15 @@ class UserGroupsController < ApplicationController
         def user_group_params
             params.permit(:admin)
         end
+
+        def admin_user
+            group_id = UserGroup.find_by(id:params[:id]).group_id
+            @user_group = UserGroup.find_by(user_id:current_user.id,group_id:group_id)
+            admin = @user_group.nil? ? false : @user_group.admin
+            unless admin
+                flash[:danger] = 'このグループの管理者ではありません'
+                redirect_to current_user 
+            end
+        end
         
 end
