@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
     before_action :logged_in_user
     before_action :my_task_destroy, only: :destroy
-    before_action :correct_user, except: [:index,:new,:create]
+    before_action :correct_user, except: [:index,:new,:create,:change]
 
     def index
         store_location

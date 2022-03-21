@@ -60,7 +60,11 @@ class GroupsController < ApplicationController
         group = Group.find(params[:group_id])
         remember_group(group)
         remember_team(group.teams.find_by(name:'general'))
-        redirect_to current_user
+        if session[:week] && session[:whose]
+            session.delete(:week)
+            session.delete(:whose)
+        end
+        redirect_to root_path
     end
 
     def search

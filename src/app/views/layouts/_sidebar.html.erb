@@ -17,12 +17,20 @@
         <% my_teams.each do |team| %>
             <%= form_with(url:change_team_path(team), local: true) do |f| %>
                 <div><%= hidden_field_tag :team_id, team.id %></div>
-                <% if current_team.name == team.name %>
-                    <%= f.submit team.name, class:'btn-danger'%>
-                <% else %>
-                    <%= f.submit team.name %>
-                <% end %>
+                <%= f.submit team.name %>
             <% end %>
         <% end %>
+    <% end %>
+    <li>目標管理</li>
+        <% current_group.teams.each do |team| %>
+            <%= form_with(url:change_monthly_goals_path, local: true) do |f| %>
+                <% if my_task?() %>
+                    <div><%= hidden_field_tag :team_id, team.id %></div>
+                    <%= f.submit "月次・週次目標" %>
+                <% elsif team.name != "general" %>
+                    <div><%= hidden_field_tag :team_id, team.id %></div>
+                    <%= f.submit team.name  %>
+                <% end %>
+            <% end %>
     <% end %>
 </section>

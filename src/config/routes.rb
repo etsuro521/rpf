@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/confirm', to:'static_pages#confirm'
+  get '/goals', to:'static_pages#goals'
   resources :tasks do
     collection do
       get :change
@@ -25,5 +26,15 @@ Rails.application.routes.draw do
     end
   end
   resources :user_teams, only: [:destroy]
+  resources :monthly_goals do
+    collection do
+      post :change, :store
+    end
+  end
+  resources :weekly_goals do
+    collection do
+      post :store, :week, :whose
+    end
+  end
 end
 

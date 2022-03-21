@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
     before_action :logged_in_user
+    before_action :store_team, only:[:goals]
 
     def home
         store_location
@@ -17,4 +18,17 @@ class StaticPagesController < ApplicationController
 
     def confirm
     end
+
+    def goals
+        
+    end
+
+    private
+    def store_team
+        unless !session[:team_id].nil?
+            flash[:danger] = '目標を表示するチームを選んでください'
+            redirect_to root_path
+        end
+    end
+    
 end

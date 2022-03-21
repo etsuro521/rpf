@@ -8,19 +8,28 @@
 
         <%= f.label :deadline %>
         <%= f.datetime_field :deadline, class: 'form-control' %>
-
-        <%= f.label :urgency_importance %>
-        <%= f.select :urgency_importance, ["A","B","C","D"], class: 'form-control' %>
-
-        <%= f.label :status %>
-        <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
+        <div class="row">
+                <div class="col-md-6">
+                        <%= f.label :urgency_importance %>
+                        <%= f.select :urgency_importance, ["A","B","C","D"], class: 'form-control' %>
+                </div>
+                <div class="col-md-6">
+                        <%= f.label :status %>
+                        <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
+                </div>
+        </div>
 
         <% if !my_task?() %>
-                <%= f.label :from %>
-                <%= f.collection_select :from, current_group.members, :id, :name,{include_blank: true}, {class: 'form-control'} %>
-
-                <%= f.label :to %>
-                <%= f.collection_select :to, current_group.members, :id, :name,{selected:current_user.id}, {class: 'form-control'} %>
+                <div class="row">
+                        <div class="col-md-6">
+                                <%= f.label :from %>
+                                <%= f.collection_select :from, current_group.members, :id, :name,{include_blank: true}, {class: 'form-control'} %>
+                        </div>
+                        <div class="col-md-6">
+                                <%= f.label :to %>
+                                <%= f.collection_select :to, current_group.members, :id, :name,{selected:current_user.id}, {class: 'form-control'} %>
+                        </div>
+                </div>
         <% end %>
         
         <%= f.label :notes %>

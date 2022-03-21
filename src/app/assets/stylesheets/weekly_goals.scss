@@ -1,0 +1,28 @@
+// Place all the styles related to the WeeklyGoals controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.w-goals{
+    label{
+        display: inline-block;
+        position: relative;
+        padding-left: 5px;
+        padding-right: 5px;
+        left: 10px;
+        border-bottom: 1px solid #333;
+        font-size: 18px;
+    }
+    p{
+        width: 100%;
+        //margin: auto 5px ;
+    }
+    td{
+        width: 50%;
+        word-break:break-word;
+    }
+    overflow: scroll; 
+    height: 640px;
+
+    a{
+        float: right;
+    }
+}

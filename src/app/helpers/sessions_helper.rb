@@ -53,6 +53,11 @@ module SessionsHelper
 
     def stored_team
         team_id = session[:team_id]
+        team = Team.find_by(id:team_id)
+    end
+
+    def stored_date
+        date = session[:date].to_datetime()
     end
 
 end

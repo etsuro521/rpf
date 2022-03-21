@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
     include SessionsHelper
     include GroupsHelper
     include TeamsHelper
+    include MonthlyGoalsHelper
+    include WeeklyGoalsHelper
 
     private
         def logged_in_user

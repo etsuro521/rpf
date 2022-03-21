@@ -1,0 +1,32 @@
+<h3><%= stored_team.name if !my_task?() %></h3>
+<h3><%= "#{stored_date.year}年#{stored_date.month}月" %></h3>
+<%= link_to "目標を追加する", new_monthly_goal_path %>
+<div class="m-goals">
+    <% @goals.each do |goal| %>
+        <%= form_with(model: goal, method: :patch, local: true) do |f| %>
+            <div class="goal-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <%= f.label :plan %>
+                        <%= f.text_area :plan, class: 'form-control' %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :action %>
+                        <%= f.text_area :action, class: 'form-control' %>
+                    </div>
+                </div>
+                <div class="row has_line">
+                    <div class="col-md-6">
+                        <%= f.label :output %>
+                        <%= f.text_area :output, class: 'form-control' %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :review %>
+                        <%= f.text_area :review, class: 'form-control' %>
+                    </div>
+                </div>
+                <%= f.submit "変更を保存", class: "btn btn-primary" %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

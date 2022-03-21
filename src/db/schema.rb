@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_04_132731) do
+ActiveRecord::Schema.define(version: 2022_03_13_150406) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(version: 2022_03_04_132731) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "monthly_goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "team_id"
+    t.datetime "month"
+    t.text "plan"
+    t.text "action"
+    t.text "output"
+    t.text "review"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_monthly_goals_on_team_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -99,7 +111,22 @@ ActiveRecord::Schema.define(version: 2022_03_04_132731) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "weekly_goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "team_id"
+    t.datetime "month"
+    t.string "week"
+    t.string "whose"
+    t.text "plan"
+    t.text "action"
+    t.text "output"
+    t.text "review"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_weekly_goals_on_team_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "monthly_goals", "teams"
   add_foreign_key "tasks", "groups"
   add_foreign_key "tasks", "teams"
   add_foreign_key "tasks", "users"
@@ -108,4 +135,5 @@ ActiveRecord::Schema.define(version: 2022_03_04_132731) do
   add_foreign_key "user_groups", "users"
   add_foreign_key "user_teams", "teams"
   add_foreign_key "user_teams", "users"
+  add_foreign_key "weekly_goals", "teams"
 end

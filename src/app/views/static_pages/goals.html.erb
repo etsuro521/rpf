@@ -1,0 +1,32 @@
+<div class="goals">
+    <h3><%= stored_team.name if !my_task?()%></h3>
+    <h3><%= "#{Date.today().year}年" %></h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th scope="col">月</th>
+            <th scope="col">月次目標</th>
+            <th scope="col">週次目標</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% get_months().each do |month| %>
+            <tr>
+                <th scope="row"><%= month.month %></th>
+                <td>
+                    <%= form_with(url:store_monthly_goals_path, local: true) do |f| %>
+                        <div><%= hidden_field_tag :date, month %></div>
+                        <%= f.submit (monthly_create_or_edit?(month) ? "目標一覧" : "新規作成") %>
+                    <% end %>
+                </td>
+                <td>
+                <%= form_with(url:store_weekly_goals_path, local: true) do |f| %>
+                    <div><%= hidden_field_tag :date, month %></div>
+                    <%= f.submit (weekly_create_or_edit?(month) ? "目標一覧" : "新規作成") %>
+                <% end %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
