@@ -11,6 +11,8 @@ class WeeklyGoalsController < ApplicationController
     def create
         @goals_form = WeeklyGoalsForm.new(goals_params,date_params) 
         if @goals_form.save
+            session[:week] = @goals_form.week
+            session[:whose] = @goals_form.whose
             redirect_to weekly_goals_path
         else
             flash.now[:danger] = 'plan/actionの入力に誤りがあります'

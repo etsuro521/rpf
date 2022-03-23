@@ -23,6 +23,8 @@ class WeeklyGoalsForm
                     next
                 end
             end.compact
+            self.week = other_params['week']
+            self.whose = other_params['whose']
         else
             self.collection = GOAL_NUM.times.map{ WeeklyGoal.new }
         end
@@ -41,6 +43,6 @@ class WeeklyGoalsForm
         ensure
             return is_success  
     end
-
+    
 
 end
