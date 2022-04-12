@@ -18,7 +18,7 @@
             <li class=<%= 'active' if current_page?(object) %>><%= link_to "Show Member", object %></li>
             <li class=<%= 'active' if current_page?(search_groups_path) %>><%= link_to "Add User", {controller: "groups", action: "search", id:object.id},method: :get %></li>
             <li class=<%= 'active' if current_page?(edit_group_path(object)) %>><%= link_to "Change Name", edit_group_path(object) %></li>
-            <li><%= link_to "Delete Group", group_path(object), method: :delete, data: {confirm: "グループを削除するとタスクまで削除されます。よろしいですか。"} %></li>
+            <li><%= link_to "Delete Group", group_path(object), method: :delete, data: {confirm: "If you delete this group, the task will also be deleted. Are you sure?"} %></li>
           </ul>
       </div>
     </div>

@@ -1,3 +1,4 @@
+<% provide(:title, "Tasks") %>
 <%= render 'shared/tab' %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3 woocommerce">
@@ -59,7 +60,7 @@
           </div>
 
           <div class="col-md-6">
-            <%= link_to "Delete", @task, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default btn-block btn-lg mb-4 mt-3" %>
+            <%= link_to "Delete", @task, method: :delete, data: { confirm: "Delete this task ?" }, class: "btn btn-default btn-block btn-lg mb-4 mt-3" %>
           </div>
         </div>
       <% else %>

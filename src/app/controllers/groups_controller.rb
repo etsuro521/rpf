@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
     def create
         @group = current_user.join_groups.build(group_params)
         if @group.save
-            flash[:success] = 'Group created!'
+            flash[:success] = 'Group created'
             @group.add_first_user(current_user)
             remember_group(@group)
             @team = @group.teams.create(name:'general')
@@ -24,6 +24,10 @@ class GroupsController < ApplicationController
             render 'new'
         end
     end    
+
+    def index
+        redirect_to root_path
+    end
 
     def edit
         @group = Group.find(params[:id])
@@ -41,11 +45,11 @@ class GroupsController < ApplicationController
 
     def destroy
         @group = Group.find(params[:id])
-        if @group.name == "マイタスク"
-            flash[:danger] = 'このグループは削除できません'
+        if @group.name == "My Task"
+            flash[:danger] = 'You cannot delete this group'
         else
             @group.destroy
-            flash[:success] = 'グループが削除されました'
+            flash[:success] = 'Group deleted'
             remember_group(current_user.join_groups.first)
         end
         redirect_to current_user
@@ -96,7 +100,7 @@ class GroupsController < ApplicationController
             @user_group = current_user.user_groups.find_by(group_id:params[:id])
             admin = @user_group.nil? ? false : @user_group.admin
             unless admin
-                flash[:danger] = 'このグループの管理者ではありません'
+                flash[:danger] = "You aren't admin user of this group"
                 redirect_to current_user 
             end
         end

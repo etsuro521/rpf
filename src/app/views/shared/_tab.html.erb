@@ -9,7 +9,7 @@
         <%= link_to 'Create Task', new_task_path, class:"nav-link" %>
     </li>
     <% if has_teams?() %>
-        <li role="presentation" class=<%= 'active' if current_page?(team_path(current_team)) %>>
+        <li role="presentation" class=<%= 'active' if !%w[tasks root new_task].any? { |name| current_page?(send("#{name}_path")) } %>>
             <%= link_to 'Team Detail', team_path(current_team), class:"nav-link" %>
         </li>
     <% end %>

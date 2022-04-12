@@ -26,7 +26,7 @@ class StaticPagesController < ApplicationController
     private
         def store_team
             unless !session[:team_id].nil?
-                flash[:danger] = '目標を表示するチームを選んでください'
+                flash[:danger] = 'Please select a team to show your goals'
                 redirect_to root_path
             end
         end

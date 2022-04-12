@@ -1,3 +1,4 @@
+<% provide(:title, @group.name) %>
 <div class="row">
   <div class="col-md-8 col-md-offset-2 woocommerce group-show">
     <%= render 'shared/g_tab',object:@group %>
@@ -17,7 +18,7 @@
                             <%= form_with(model:member.user_groups.find_by(group_id:@group.id),html: { method: :patch }, local: true) do |f| %>
                                 <div><%= hidden_field_tag :admin, false %></div>
                                 <div><%= hidden_field_tag :group_id, @group.id %></div>
-                                <%= f.submit "Delete Admin", class: "btn btn-primary",data: { confirm: "#{member.name}の権限を外しますか?" }  %>
+                                <%= f.submit "Delete Admin", class: "btn btn-primary",data: { confirm: "Delete #{member.name}'s admin ?" }  %>
                             <% end %>
                         <% end %>
                     </td>

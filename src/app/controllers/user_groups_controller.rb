@@ -6,7 +6,7 @@ class UserGroupsController < ApplicationController
         @user_group = UserGroup.find(params[:id])
         @group = Group.find(params[:group_id])
         if params[:admin]=='false' && UserGroup.where("(group_id=?) AND (admin=true)",@group.id).count == 1
-            flash[:danger] = "管理者が一人もいなくなります"
+            flash[:danger] = "Admin user for this group will be gone"
             redirect_to @group
         elsif User.find(@user_group.user_id).id == current_user.id
             redirect_to current_user
@@ -23,7 +23,7 @@ class UserGroupsController < ApplicationController
         @group = Group.find(@user_group.group_id)
         user_id = @user_group.user_id
         if first_user?(@group)
-            flash[:danger] = 'グループにメンバーがいなくなります。グループが必要ない場合は削除してください。'
+            flash[:danger] = 'The group will no longer have members. If you do not need the group, delete it.'
             redirect_to @group
             return
         end
@@ -48,7 +48,7 @@ class UserGroupsController < ApplicationController
             @user_group = UserGroup.find_by(user_id:current_user.id,group_id:group_id)
             admin = @user_group.nil? ? false : @user_group.admin
             unless admin
-                flash[:danger] = 'このグループの管理者ではありません'
+                flash[:danger] = "You don't belong to this group"
                 redirect_to current_user 
             end
         end

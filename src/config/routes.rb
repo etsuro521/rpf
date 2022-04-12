@@ -37,5 +37,6 @@ Rails.application.routes.draw do
       post :store, :week, :whose
     end
   end
+  match "*path" => "application#error404", via: :all
 end
 

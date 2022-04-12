@@ -20,10 +20,14 @@ class TasksController < ApplicationController
         @task = current_user.tasks.build
     end
 
+    def show
+        render 'edit'
+    end
+
     def create
         @task = current_user.tasks.build(task_params)
         if @task.save
-            flash[:success] = 'Task created!'
+            flash[:success] = 'Task created'
             redirect_to session[:forwarding_url]
         else
             render 'new'
@@ -45,7 +49,7 @@ class TasksController < ApplicationController
 
     def destroy
         @task.destroy
-        flash[:success] = "task deleted"
+        flash[:success] = "Task deleted"
         redirect_to root_url
     end
 
@@ -70,10 +74,10 @@ class TasksController < ApplicationController
             group = Group.find_by(id:task.group_id)
             team = Team.find_by(id:task.team_id)
             if !group.members.exists?(current_user.id)
-                flash[:danger] = "タスクを管理するグループに所属していません"
+                flash[:danger] = "You don't belong to any group that manages tasks"
                 redirect_to root_path
             elsif team.nil? && !team.members.exists?(current_user.id)
-                flash[:danger] = "タスクを管理するチームに所属していません"
+                flash[:danger] = "You don't belong to any team that manages tasks"
                 redirect_to root_path
             end
             

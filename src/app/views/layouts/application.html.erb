@@ -10,7 +10,7 @@
   </head>
   <body style="zoom: 1;">    
     <% if logged_in? %>
-        <%= render 'layouts/sidebar' %>
+        <%= render 'layouts/header' %>
     <% end %>
     <div class="container">
       <% flash.each do |message_type, message| %>

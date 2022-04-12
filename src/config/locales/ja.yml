@@ -2,3 +2,47 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
+  activerecord:
+    attributes:
+      task:
+        title: 'Task'
+        deadline: 'Deadline'
+        urgency_importance: 'Importance・Urgency'
+        status: 'Status'
+        notes: 'Notes'
+      user:
+        name: 'Name'
+        email: 'Email'
+        password: 'Password'
+        password_confirmation: 'Password Confirmation'
+      session:
+        email: 'Email'
+    errors:
+      models:
+        task:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 255 characters or less
+        group:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 255 characters or less
+        team:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 255 characters or less
+        monthly_goal:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 500 characters or less
+        weekly_goal:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 500 characters or less
+        user:
+          format: "%{attribute}: %{message}"
+          blank: is required fields
+          too_long: is 500 characters or less
+          invalid: does not fit the format.
+          taken: is already registered
+          confirmation: and Password are different

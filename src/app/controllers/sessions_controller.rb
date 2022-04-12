@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       end
       redirect_back_or root_path
     else
-      flash.now[:danger] = 'メールアドレスもしくはパスワードが異なります'
+      flash.now[:danger] = 'Email or password are different'
       render 'new'
     end
   end

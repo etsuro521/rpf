@@ -10,13 +10,17 @@ class TeamsController < ApplicationController
     def create
         @team = current_group.teams.build(team_params)
         if @team.save
-            flash[:success] = 'Team created!'
+            flash[:success] = 'Team created'
             @team.add_first_user(current_user)
             remember_team(@team)
             redirect_to @team
         else
             render 'new'
         end
+    end
+
+    def index
+        redirect_to root_path
     end
 
     def show
@@ -49,9 +53,23 @@ class TeamsController < ApplicationController
         redirect_to @team
     end
 
+    def edit
+        @team = Team.find(params[:id])
+    end
+
+    def update
+        @team = Team.find(params[:id])
+        if @team.update(team_params)
+          flash[:success] = "Team Name updated"
+          redirect_to @team
+        else
+          render 'edit'
+        end
+    end
+
     def destroy
         Team.find(params[:id]).destroy
-        flash[:success] = 'チームが削除されました'
+        flash[:success] = 'Team deleted'
         if !current_user.join_teams.empty?
             remember_team(current_user.join_teams.first)
         else
@@ -73,7 +91,7 @@ class TeamsController < ApplicationController
         def user_added_team
             @user_team = current_user.user_teams.find_by(team_id:params[:id])
             if @user_team.nil?
-                flash[:danger] = 'このチームには所属していません'
+                flash[:danger] = "You don't belong to this team"
                 redirect_to root_path  
             end
         end

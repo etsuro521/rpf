@@ -1,3 +1,4 @@
+<% provide(:title, "Weekly Goals") %>
 <div class="new-goals">
     <%= form_with model: @goals_form, url: weekly_goals_path,class:"form-horizontal", local: true do |form| %>
         <nav class="navbar navbar-default">
@@ -11,7 +12,7 @@
                     </button>
 
                     <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
-                    <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
+                    <div class="navbar-header navbar-brand"><%= "#{stored_date.year}/#{stored_date.month}" %></div>
                     <% if !my_task?() %>
                         <div class="navbar-header navbar-brand form-seelct">
                             <%= form.label :whose,class:"control-label sr-only" %>

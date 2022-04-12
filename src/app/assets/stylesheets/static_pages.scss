@@ -39,7 +39,7 @@ a.task{
         text-align: center;
     }
     .month{
-        padding-top: 2.5%;
+        padding-top: 3%;
     }
     .navbar{
         background: white;
@@ -51,6 +51,9 @@ a.task{
     }
     th{
         text-align: center;
+    }
+    td input{
+        margin-bottom: 0 !important;
     }
 } 
 

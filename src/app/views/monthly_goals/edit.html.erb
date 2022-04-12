@@ -1,3 +1,4 @@
+<% provide(:title, "Monthly Goals") %>
 <div class="edit-goals">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 woocommerce">
@@ -11,7 +12,7 @@
                         <span class="icon-bar"></span>
                         </button>
                         <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
-                        <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
+                        <div class="navbar-header navbar-brand"><%= "#{stored_date.year}/#{stored_date.month}/" %></div>
                     </div>
                     
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -25,9 +25,10 @@ class MonthlyGoalsController < ApplicationController
     def create
         @goals_form = MonthlyGoalsForm.new(goals_params)
         if @goals_form.save
+            flash[:success] = "Monthly Goals created"
             redirect_to monthly_goals_path
         else
-            flash.now[:danger] = 'plan/actionの入力に誤りがあります'
+            flash.now[:danger] = 'There is an error in the entry of plan or action'
             render :new
         end
     end
@@ -36,23 +37,27 @@ class MonthlyGoalsController < ApplicationController
         @goals = stored_team.monthly_goals.where(month:stored_date).order(updated_at: :asc)
     end
 
+    def show
+        render 'edit'
+    end
+
     def edit
         @monthly_goal = MonthlyGoal.find(params[:id])
     end
 
     def update
-        @goal = MonthlyGoal.find(params[:id])
-        if @goal.update(edti_goals_params)
-          flash[:success] = "monthly goal updated"
+        @monthly_goal = MonthlyGoal.find(params[:id])
+        if @monthly_goal.update(edti_goals_params)
+          flash[:success] = "Monthly goal updated"
           redirect_to monthly_goals_path
         else
-          render 'index'
+          render 'edit'
         end
     end
 
     def destroy
         MonthlyGoal.find(params[:id]).destroy
-        flash[:success] = "monthly goal deleted"
+        flash[:success] = "Monthly goal deleted"
         @monthly_goal = stored_team.monthly_goals.where(month:stored_date)
         redirect_to (@monthly_goal.exists? ? weekly_goals_path : goals_path)
     end

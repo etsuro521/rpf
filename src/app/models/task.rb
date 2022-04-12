@@ -12,7 +12,7 @@ class Task < ApplicationRecord
     validates :urgency_importance, inclusion: { in: %w(A B C D) }
     validates :status, inclusion: { in: %w(未着手 対応中 完了) }
   end
-  validates :notes, length: { maximum: 500 }
+  validates :notes, length: { maximum: 255 }
   validate :after_now, on: :create
   validate :should_set_to
 
@@ -26,13 +26,13 @@ class Task < ApplicationRecord
 
     def should_set_from
       if Group.find(self.group_id).name != 'マイタスク'
-        errors.add(:from,"should set from")
+        errors.add(:from,"is required fields")
       end
     end
 
     def should_set_to
       if !self.to.present? && Group.find(self.group_id).name != 'マイタスク'
-        errors.add(:to,"should set to")
+        errors.add(:to,"is required fields")
       end
     end
 end

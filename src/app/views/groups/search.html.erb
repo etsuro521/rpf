@@ -1,3 +1,4 @@
+<% provide(:title, @group.name) %>
 <div class="search">
     <div class="row">
         <div class="col-md-8 col-md-offset-2 woocommerce">
@@ -26,7 +27,7 @@
                                             <% if @group.user_added?(user) %>
                                                 <%= form_with url:add_group_path(@group), local: true do |f| %>
                                                     <div><%= hidden_field_tag :user_id, user.id %></div>
-                                                    <%= f.submit "Add User", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@group.name}に追加しますか？" }  %>
+                                                    <%= f.submit "Add User", class: "btn btn-primary",data: { confirm: "Add #{user.name} to #{@group.name} ?" }  %>
                                                 <% end %>
                                             <% elsif %>
                                                 Member

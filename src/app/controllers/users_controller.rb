@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user  =User.new(user_params)
     if @user.save
         log_in @user
-        flash[:success] = "Welcome to this app!"
+        flash[:success] = "Welcome to TimuTasu!"
         @mytask = @user.join_groups.create(name:'My Task')
         @general = @mytask.teams.create(name:'general')
         @general.members << @user
@@ -30,6 +30,10 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def index
+    redirect_to root_path
   end
 
   def edit

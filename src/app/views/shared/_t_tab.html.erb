@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-header navbar-brand"><%= @team.name %></div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class=<%= 'active' if current_page?(@team) %>><%= link_to 'Show Member',@team %></li>
+                <li class=<%= 'active' if current_page?(edit_team_path(@team)) %>><%= link_to 'Change Name',edit_team_path(@team) %></li>
+                <li class=<%= 'active' if current_page?(search_team_path(@team)) %>><%= link_to 'Add User',search_team_path(@team) %></li>
+                <li><%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "If you delete this team, the task will also be deleted. Are you sure ?"} %></li>
+            </ul>
+        </div>
+    </div>
+</nav>

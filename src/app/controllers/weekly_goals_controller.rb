@@ -15,11 +15,12 @@ class WeeklyGoalsController < ApplicationController
     def create
         @goals_form = WeeklyGoalsForm.new(goals_params,date_params) 
         if @goals_form.save
+            flash[:success] = "Weekly Goals created"
             session[:week] = @goals_form.week
             session[:whose] = @goals_form.whose
             redirect_to weekly_goals_path
         else
-            flash.now[:danger] = 'plan/actionの入力に誤りがあります'
+            flash.now[:danger] = 'There is an error in the entry of plan or action'
             render :new
         end
     end
@@ -36,7 +37,10 @@ class WeeklyGoalsController < ApplicationController
             session[:whose] = default_whose(stored_team,stored_date)
             @goals = stored_team.weekly_goals.where(month:stored_date,week:session[:week],whose:session[:whose]).order(updated_at: :desc)
         end
-        
+    end
+
+    def show
+        render 'edit'
     end
 
     def week
@@ -56,7 +60,7 @@ class WeeklyGoalsController < ApplicationController
     def update
         @weekly_goal = WeeklyGoal.find(params[:id])
         if @weekly_goal.update(edit_goals_params)
-            flash[:success] = " Weekly Goal updated"
+            flash[:success] = "Weekly Goal updated"
             redirect_to weekly_goals_path
         else
             render 'edit'
@@ -67,7 +71,7 @@ class WeeklyGoalsController < ApplicationController
         @weekly_goal = WeeklyGoal.find(params[:id])
         week = @weekly_goal.week
         @weekly_goal.destroy
-        flash[:success] = "WeeklyGoal deleted"
+        flash[:success] = "Weekly Goal deleted"
         @weekly_goal_week = stored_team.weekly_goals.where(month:stored_date,week:week)
         @weekly_goal = stored_team.weekly_goals.where(month:stored_date)
         if @weekly_goal_week.exists?

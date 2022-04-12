@@ -1,28 +1,9 @@
+<% provide(:title, @team.name) %>
 <%= render 'shared/tab' %>
 <div class="team-detail">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 woocommerce">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <div class="navbar-header navbar-brand"><%= @team.name %></div>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><%= link_to 'Show Member',@team %></li>
-                            <li><%= link_to 'Add User',search_team_path(@team) %></li>
-                            <li><%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "チームを削除するとタスクまで削除されます。よろしいですか。"} %></li>    
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <div class="col-md-7 col-md-offset-3 woocommerce">
+            <%= render 'shared/t_tab' %>
             <table class="table">
                 <tbody>
                     <% @members.each do |member| %>
@@ -30,7 +11,7 @@
                             <th scope="row"><%= member.name %></th> 
                             <td>
                                 <%= form_with(model: member.user_teams.find_by(team_id:@team.id),html: { method: :delete }, local: true) do |f| %>
-                                    <%= f.submit "Remove", class: "btn btn-default",data: { confirm: "#{member.name}を退会させますか?" } %>
+                                    <%= f.submit "Remove", class: "btn btn-default",data: { confirm: "Remove #{member.name} ?" } %>
                                 <% end %>
                             </td>
                         </tr>

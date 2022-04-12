@@ -1,7 +1,7 @@
 <div class="inner cover confirm">
     <p class="lead"><%= @team.name %> has no user<br>delete this team ?</p>
     <p class="lead">
-        <%= link_to "Yes", team_path(@team), method: :delete, data: {confirm: "チームを削除するとタスクまで削除されます。よろしいですか。"},class:"btn btn-lg btn-primary" %>
+        <%= link_to "Yes", team_path(@team), method: :delete, data: {confirm: "If you delete this team, the task will also be deleted. Are you sure?"},class:"btn btn-lg btn-primary" %>
         <%= link_to "No", root_path,class:"btn btn-lg btn-default" %>
     </p>
 </div>
