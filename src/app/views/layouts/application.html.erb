@@ -4,37 +4,20 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
     
   </head>
-  <body>    
+  <body style="zoom: 1;">    
+    <% if logged_in? %>
+        <%= render 'layouts/sidebar' %>
+    <% end %>
     <div class="container">
-      <% if logged_in? %>
-        <div class="row row-offcanvas row-offcanvas-">
-          
-          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="origin-side">
-              <%= render 'layouts/sidebar' %>
-            </div>
-          </div>
-        
-          <div class="col-xs-12 col-sm-9">
-            <div class="origin-main">
-              <% flash.each do |message_type, message| %>
-                <div class="alert alert-<%= message_type %>"><%= message %></div>
-              <% end%>
-              <%= yield %>
-            </div>
-          </div>
-        </div>
-      <% else %>
-        <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>"><%= message %></div>
-        <% end%>
-        <%= yield %>
-      <% end %>
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end%>
+      <%= yield %>
     </div>
   </body>
 </html>
+

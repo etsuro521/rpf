@@ -1,0 +1,25 @@
+<div class="user-navbar">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header navbar-brand"><%= object.name %></div>
+      </div>
+      
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+              <li class=<%= 'active' if current_page?(object) %>><%= link_to 'Joined Group',object %></li>
+              <li class=<%= 'active' if current_page?(new_group_path) %>><%= link_to 'Create Group', new_group_path %></li>
+              <li class=<%= 'active' if current_page?(edit_user_path(object)) %>><%= link_to 'Edit Profile', edit_user_path(object) %></li>
+              <li><%= link_to 'Logout',logout_path, method: :delete %></li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+</div>

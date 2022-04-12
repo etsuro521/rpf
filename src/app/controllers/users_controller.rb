@@ -19,8 +19,8 @@ class UsersController < ApplicationController
     @user  =User.new(user_params)
     if @user.save
         log_in @user
-        flash[:success] = "Welcome to the Sample App!"
-        @mytask = @user.join_groups.create(name:'マイタスク')
+        flash[:success] = "Welcome to this app!"
+        @mytask = @user.join_groups.create(name:'My Task')
         @general = @mytask.teams.create(name:'general')
         @general.members << @user
         remember_group(@mytask)

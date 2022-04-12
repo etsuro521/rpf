@@ -1,37 +1,36 @@
-<%= @group.name %>
-<%= link_to 'ユーザーを追加',search_group_path(@group) %>
-<%= link_to "グループ名を変更", edit_group_path(@group) %>
-<%= link_to "グループを削除", group_path(@group), method: :delete, data: {confirm: "グループを削除するとタスクまで削除されます。よろしいですか。"} %>
-<h3>メンバー</h3>
-<table class="table">
-    <tbody>
-        <% @members.each do |member| %>
-            <tr>
-                <th scope="row"><%= member.name %></th>
-                <td>
-                    <% if !admin_user?(@group,member) %>
-                        <%= form_with(model:member.user_groups.find_by(group_id:@group.id),html: { method: :patch }, local: true) do |f| %>
-                            <div><%= hidden_field_tag :admin, true %></div>
-                            <div><%= hidden_field_tag :group_id, @group.id %></div>
-                            <%= f.submit "管理者にする", class: "btn btn-primary" %>
-                        <% end %>
-                    <% else %>
-                        <%= form_with(model:member.user_groups.find_by(group_id:@group.id),html: { method: :patch }, local: true) do |f| %>
-                            <div><%= hidden_field_tag :admin, false %></div>
-                            <div><%= hidden_field_tag :group_id, @group.id %></div>
-                            <%= f.submit "権限を外す", class: "btn btn-primary",data: { confirm: "#{member.name}の権限を外しますか?" }  %>
-                        <% end %>
-                    <% end %>
-                </td>
-                <% if !first_user?(@group) %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 woocommerce group-show">
+    <%= render 'shared/g_tab',object:@group %>
+    <table class="table">
+        <tbody>
+            <% @members.each do |member| %>
+                <tr>
+                    <td><div class="group-member" ><%= member.name %></div></td>
                     <td>
-                        <%= form_with(model: member.user_groups.find_by(group_id:@group.id),html: { method: :delete }, local: true) do |f| %>
-                            <%= f.submit "退会させる", class: "btn btn-default" %>
+                        <% if !admin_user?(@group,member) %>
+                            <%= form_with(model:member.user_groups.find_by(group_id:@group.id),html: { method: :patch }, local: true) do |f| %>
+                                <div><%= hidden_field_tag :admin, true %></div>
+                                <div><%= hidden_field_tag :group_id, @group.id %></div>
+                                <%= f.submit "Give Admin", class: "btn btn-primary" %>
+                            <% end %>
+                        <% else %>
+                            <%= form_with(model:member.user_groups.find_by(group_id:@group.id),html: { method: :patch }, local: true) do |f| %>
+                                <div><%= hidden_field_tag :admin, false %></div>
+                                <div><%= hidden_field_tag :group_id, @group.id %></div>
+                                <%= f.submit "Delete Admin", class: "btn btn-primary",data: { confirm: "#{member.name}の権限を外しますか?" }  %>
+                            <% end %>
                         <% end %>
                     </td>
-                <%end%>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
-<button onclick="history.back()" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <% if !first_user?(@group) %>
+                        <td>
+                            <%= form_with(model: member.user_groups.find_by(group_id:@group.id),html: { method: :delete }, local: true) do |f| %>
+                                <%= f.submit "Remove", class: "btn btn-default" %>
+                            <% end %>
+                        </td>
+                    <%end%>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+  </div>
+</div>

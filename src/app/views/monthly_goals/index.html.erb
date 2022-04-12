@@ -1,32 +1,51 @@
-<h3><%= stored_team.name if !my_task?() %></h3>
-<h3><%= "#{stored_date.year}年#{stored_date.month}月" %></h3>
-<%= link_to "目標を追加する", new_monthly_goal_path %>
 <div class="m-goals">
-    <% @goals.each do |goal| %>
-        <%= form_with(model: goal, method: :patch, local: true) do |f| %>
-            <div class="goal-form">
-                <div class="row">
-                    <div class="col-md-6">
-                        <%= f.label :plan %>
-                        <%= f.text_area :plan, class: 'form-control' %>
-                    </div>
-                    <div class="col-md-6">
-                        <%= f.label :action %>
-                        <%= f.text_area :action, class: 'form-control' %>
-                    </div>
-                </div>
-                <div class="row has_line">
-                    <div class="col-md-6">
-                        <%= f.label :output %>
-                        <%= f.text_area :output, class: 'form-control' %>
-                    </div>
-                    <div class="col-md-6">
-                        <%= f.label :review %>
-                        <%= f.text_area :review, class: 'form-control' %>
-                    </div>
-                </div>
-                <%= f.submit "変更を保存", class: "btn btn-primary" %>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
+                <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
             </div>
-        <% end %>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><%= link_to "Add Goal", new_monthly_goal_path %></li>
+                </ul>
+            </div>
+        </div>
+
+    </nav> 
+
+    <% @goals.each do |goal| %>
+        <table class="table table-bordered">
+            <tbody>
+                    <tr>
+                        <td>
+                            <label>Plan</label>
+                            <p><%= goal.plan %></p>
+                        </td>
+                        <td>
+                            <label>Output</label>
+                            <%= link_to "Edit", edit_monthly_goal_path(goal), class:'edit-link' %>
+                            <p><%= goal.output %></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Action</label>
+                            <p><%= goal.action %></p>
+                        </td>
+                        <td>
+                            <label>Review</label>
+                            <p><%= goal.review %></p>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
     <% end %>
 </div>

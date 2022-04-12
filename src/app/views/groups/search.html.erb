@@ -1,37 +1,47 @@
 <div class="search">
-    <%= form_with(model: @user,url:search_group_path, method: :get, local: true) do |f| %>
-        <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
-        <%= f.submit '検索する', class: "btn btn-primary" %>
-    <% end %>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 woocommerce">
+            <%= render 'shared/g_tab',object:@group %>
+            <%= form_with model: @user,url:search_groups_path, method: :get, class:"form-horizontal", local: true do |f| %>
+                <%= f.label :email,class:"sr-only" %>
+                <div><%= hidden_field_tag :id,@group.id %></div>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <%= f.text_field :email, class: 'form-control',placeholder:"Email" %>
+                    </div>
+                    <%= f.submit 'Search', class: "btn btn-primary col-sm-2" %>
+                </div>
+            <% end %>
+            <% if @result_users %>
+                <div class="result">
+                    <h5>Search Terms : <%= @keywords %></h5>
+                    <table class="table">
+                        <tbody>
+                            <% if !@result_users.blank? %>
+                                <% @result_users.each do |user| %>
+                                    <tr>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.email %></td>
+                                        <td>
+                                            <% if @group.user_added?(user) %>
+                                                <%= form_with url:add_group_path(@group), local: true do |f| %>
+                                                    <div><%= hidden_field_tag :user_id, user.id %></div>
+                                                    <%= f.submit "Add User", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@group.name}に追加しますか？" }  %>
+                                                <% end %>
+                                            <% elsif %>
+                                                Member
+                                            <% end %>
+                                        </td>
+                                    </tr>
+                                <% end %>
+                            <% else %>
+                                <tr><td>User with the Search Termss was not found.</td></tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>  
+            <% end %>
+        </div>
+    </div>
 </div>
 
-<% if @result_users %>
-    <div class="result">
-        <h5>Search Terms: <%= @keywords %></h5>
-        <% if !@result_users.blank? %>
-            <table class="table">
-                <tbody>
-                    <% @result_users.each do |user| %>
-                        <tr>
-                            <th scope="row"><%= user.name %></th>
-                            <td><%= user.email %></td>
-                            <td>
-                                <% if @group.user_added?(user) %>
-                                    <%= form_with(url:add_group_path, local: true) do |f| %>
-                                        <div><%= hidden_field_tag :user_id, user.id %></div>
-                                        <%= f.submit "メンバーに追加", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@group.name}に追加しますか？" }  %>
-                                    <% end %>
-                                <% elsif %>
-                                    メンバー
-                                <% end %>
-                            </td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        <% else %>
-            該当するユーザーが見つかりません
-        <% end %>
-    </div>  
-<% end %>

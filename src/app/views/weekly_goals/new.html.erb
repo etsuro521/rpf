@@ -1,59 +1,64 @@
-<h3><%= stored_team.name if !my_task?() %></h3>
-<h3><%= "#{stored_date.year}年#{stored_date.month}月" %></h3>
-<%= form_with model: @goals_form, url: weekly_goals_path,class:"form-horizontal", local: true do |form| %>
-    <div class="row">
-        <% if !my_task?() %>
-            <div class="col-md-6">
-                <%= form.label :whose,class:"col-sm-2 control-label" %>
-                <div class="col-sm-10">
-                    <%= form.select :whose, [[stored_team.name,0], [current_user.name,current_user.id]], {class: 'form-control'} %>
-                </div>
-            </div>
-        <% else %>
-            <%= form.hidden_field :whose, value:0 %>
-        <% end %>
-        <div class="col-md-6">
-            <%= form.label :week,class:"col-sm-2 control-label" %>
-            <div class="col-sm-10">
-                <%= form.select :week, ["１週目", "２週目", "３週目", "４週目", "５週目"], class: 'form-control' %>
-            </div>
-        </div>
-    </div>
+<div class="new-goals">
+    <%= form_with model: @goals_form, url: weekly_goals_path,class:"form-horizontal", local: true do |form| %>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
 
-    <table class="table">
-        <tbody>
-            <% @goals_form.collection.each do |goal|%>
-                <tr>
-                    <%= fields_for 'goals[]', goal do |f| %>
-                        <td>
-                            <%= f.label :check, class: "checkbox inline" do %>
-                                <span>保存</span>
+                    <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
+                    <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
+                    <% if !my_task?() %>
+                        <div class="navbar-header navbar-brand form-seelct">
+                            <%= form.label :whose,class:"control-label sr-only" %>
+                            <%= form.select :whose, [[stored_team.name,0], [current_user.name,current_user.id]],{}, class: 'form-control' %>
+                        </div>
+                    <% else %>
+                        <%= form.hidden_field :whose, value:0 %>
+                    <% end %>
+                    <div class="navbar-header navbar-brand form-seelct">
+                        <%= form.label :week,class:"control-label sr-only" %>
+                        <%= form.select :week, ["１週目", "２週目", "３週目", "４週目", "５週目"],{}, class: 'form-control' %>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+        <table class="table">
+            <tbody>
+                <% @goals_form.collection.each do |goal|%>
+                    <tr>
+                        <%= fields_for 'goals[]', goal do |f| %>
+                            <td class="check-goal">
+                                <%= f.label :check, class: "checkbox inline"%>
                                 <%= f.check_box :check ,{ checked: (goal == @goals_form.collection[0] ? true : false) } %>
-                            <% end %>
-                        </td>
-                        <td>
+                            </td>
                             <%= f.hidden_field :month, value:stored_date %>
                             <%= f.hidden_field :team_id, value:stored_team.id %>
-                        </td>
 
-                        <td>
-                            <%= f.label :plan, class:"col-sm-2 control-label" %>
-                            <div class="col-sm-10">
-                                <%= f.text_field :plan, class: 'form-control' %>
-                            </div>
-                        </td>
-                        <td><span class="glyphicon glyphicon-arrow-right" ></span> </td>
-                        <td>
-                            <%= f.label :action, class:"col-sm-2 control-label" %>
-                            <div class="col-sm-10">
-                                <%= f.text_field :action, class: 'form-control' %>
-                            </div>
-                        </td>
+                            <td class="other-form">
+                                <%= f.label :plan, class:"col-sm-2 control-label" %>
+                                <div class="col-sm-10">
+                                    <%= f.text_field :plan, class: 'form-control' %>
+                                </div>
+                            </td>
+                            <td class="other-form">
+                                <%= f.label :action, class:"col-sm-2 control-label" %>
+                                <div class="col-sm-10">
+                                    <%= f.text_field :action, class: 'form-control' %>
+                                </div>
+                            </td>
 
-                    <% end %>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    <%= form.submit "Post", class: "btn btn-primary" %>
-<% end %>
+                        <% end %>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <%= form.submit "Post", class: "btn btn-primary" %>
+    <% end %>
+</div>

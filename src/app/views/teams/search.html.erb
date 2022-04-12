@@ -1,39 +1,70 @@
 <%= render 'shared/tab' %>
+<div class="team-detail">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 woocommerce">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <div class="navbar-header navbar-brand"><%= @team.name %></div>
+                    </div>
 
-<div class="search">
-    <%= form_with(model: @user,url:search_team_path, method: :get, local: true) do |f| %>
-        <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
-        <%= f.submit '検索する', class: "btn btn-primary" %>
-    <% end %>
-</div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><%= link_to 'Show Member',@team %></li>
+                            <li><%= link_to 'Add User',search_team_path(@team) %></li>
+                            <li><%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "チームを削除するとタスクまで削除されます。よろしいですか。"} %></li>    
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
-<% if @result_users %>
-    <div class="result">
-        <h5>Search Terms: <%= @keywords %></h5>
-        <% if !@result_users.blank? %>
-            <table class="table">
-                <tbody>
-                    <% @result_users.each do |user| %>
-                        <tr>
-                            <th scope="row"><%= user.name %></th>
-                            <td><%= user.email %></td>
-                            <td>
-                                <% if @team.user_added?(user) %>
-                                    <%= form_with(url:add_team_path, local: true) do |f| %>
-                                        <div><%= hidden_field_tag :user_id, user.id %></div>
-                                        <%= f.submit "メンバーに追加", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@team.name}に追加しますか？" }  %>
-                                    <% end %>
-                                <% elsif %>
-                                    メンバー
+            <%= form_with(model: @user,url:search_team_path, method: :get, class:"form-horizontal", local: true) do |f| %>
+                <%= f.label :email,class:"sr-only" %>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <%= f.text_field :email, class: 'form-control',placeholder:"Email" %>
+                    </div>
+                    <%= f.submit 'Search', class: "btn btn-primary col-sm-2" %>
+                </div>
+                
+            <% end %>
+
+            <% if @result_users %>
+                <div class="result">
+                    <h5>Search Terms: <%= @keywords %></h5>
+                    <table class="table">
+                        <tbody>
+                            <% if !@result_users.blank? %>
+                                <% @result_users.each do |user| %>
+                                    <tr>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.email %></td>
+                                        <td>
+                                            <% if @team.user_added?(user) %>
+                                                <%= form_with(url:add_team_path, local: true) do |f| %>
+                                                    <div><%= hidden_field_tag :user_id, user.id %></div>
+                                                    <%= f.submit "Add User", class: "btn btn-primary",data: { confirm: "#{user.name}を#{@team.name}に追加しますか？" }  %>
+                                                <% end %>
+                                            <% elsif %>
+                                                Member
+                                            <% end %>
+                                        </td>
+                                    </tr>
                                 <% end %>
-                            </td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        <% else %>
-            該当するユーザーが見つかりません
-        <% end %>
-    </div>  
-<% end %>
+                            <% else %>
+                                <tr><td>User with the Search Terms was not found.</td></tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>  
+            <% end %>
+            
+        </div>
+    </div>
+</div>

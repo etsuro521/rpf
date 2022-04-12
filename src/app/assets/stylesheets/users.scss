@@ -1,7 +1,73 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 .group-list a{
     display: inline-block;
     float: left;
+}
+
+.woocommerce{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: normal;
+    line-height: 1.5;
+    text-align: left;
+    -webkit-box-direction: normal !important;
+    color: #2C2C2C;
+    font-size: 15px;
+    letter-spacing: -.01em;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 15px;
+
+    .woocommerce-form-row{
+        text-align: left;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        clear: both;
+        margin: 0 0 6px;
+        display: block;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.my-groups{
+    padding: auto 10px;
+    margin: auto 10px;
+    td{
+        width: 30%;
+    }
+    table{
+        margin-bottom: 0;
+        width: 750px;
+        
+    }
+    table:first-child {
+        td{
+            border-top: none;
+        }
+    }
+    .group-name{
+        padding:6px 0;
+    }
+    .btn{
+        width: 95.09px;
+    }
+}
+
+.user-navbar{
+    .navbar-default{
+        background-color: white;
+        border: none;
+        border-bottom: 1px solid #e7e7e7;
+    }
+    font-size: 14px;
+    .navbar-toggle{
+        float: left;
+    }
 }

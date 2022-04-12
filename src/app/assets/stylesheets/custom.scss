@@ -12,18 +12,24 @@ a {
 
 body {
     padding-top: 60px;
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 section {
     overflow: auto;
 }
 
-textarea {
+
+input {
+    margin-bottom: 10px !important;
+}
+textarea{
+    margin-bottom: 10px !important;
     resize: vertical;
 }
-
-.center h1 {
-    margin-bottom: 10px;
+select{
+    margin-bottom: 10px !important;
 }
 
 .finish {
@@ -34,70 +40,6 @@ textarea {
 }
 .warn{
     background-color: #ffff00;
-}
-
-/* typography */
-
-h1, h2, h3, h4, h5, h6 {
-    line-height: 1;
-}
-  
-h1 {
-    font-size: 3em;
-    letter-spacing: -2px;
-}
-
-h2 {
-    font-size: 1.2em;
-    letter-spacing: -1px;
-    font-weight: normal;
-    color: #777;
-}
-
-p {
-    font-size: 1.1em;
-    line-height: 1.7em;
-}
-
-/* sidebar */
-
-aside {
-    section.user_info {
-        margin-top: 20px;
-    }
-    section {
-            padding: 10px 0;
-            margin-top: 20px;
-            &:first-child {
-            border: 0;
-            padding-top: 0;
-        }
-        span {
-            display: block;
-            margin-bottom: 3px;
-            line-height: 1;
-        }
-        h1 {
-            font-size: 1.4em;
-            text-align: left;
-            letter-spacing: -1px;
-            margin-bottom: 3px;
-            margin-top: 0px;
-        }
-    }
-}
-
-/* forms */
-
-input, textarea, select, .uneditable-input {
-    border: 1px solid #bbb;
-    width: 100%;
-    margin-bottom: 15px;
-    @include box_sizing;
-}
-
-input {
-    height: auto !important;
 }
 
 #error_explanation {
@@ -134,13 +76,14 @@ li.task {
 }
 
 .nav-tabs{
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
-.origin-side{
-    padding: 10px;
-    height: 100%;
-    background-color: #f5f5f5;
-    //margin-right: 50px;
+.form-signin-heading{
+    text-align: center;
+}
+
+.confirm .btn-default{
+    width: 62.34px;
 }
 

@@ -15,15 +15,16 @@ Rails.application.routes.draw do
   resources :groups do
     member do
       post :change, :add
-      get :search
     end
+    get "search", on: :collection
   end
   resources :user_groups, only: [:edit,:update,:destroy]
   resources :teams do
     member do
-      post :change, :add
+      post :add
       get :search, :confirm
     end
+    post "change", on: :collection
   end
   resources :user_teams, only: [:destroy]
   resources :monthly_goals do

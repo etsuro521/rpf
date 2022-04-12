@@ -1,6 +1,36 @@
 // Place all the styles related to the Tasks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 .origin-pagenate{
     text-align: center;
+    .pagination{
+        margin: 0 auto;
+    }
+}
+.task-index{
+    width: 90%;
+    th{
+        text-align: center;
+    }
+    a {
+        color: black;
+    }
+    margin: auto 5%;
+}
+.iu {
+    width: 20%;
+    text-align: center;
+}
+.st {
+    width: 5%;
+    text-align: center;
+}
+.dl{
+    width: 15%;
+}
+.u-name{
+    width: 15%;
 }

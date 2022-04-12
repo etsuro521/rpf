@@ -1,48 +1,70 @@
 <%= render 'shared/tab' %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 woocommerce">
+    <%= form_with(model: @task, local: true) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
 
-<%= form_with(model: @task, local: true) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
 
-  <%= f.label :title %>
-  <%= f.text_field :title, class: 'form-control' %>
+      <%= f.label :deadline %>
+      <%= f.datetime_field :deadline, class: 'form-control' %>
 
-  <%= f.label :deadline %>
-  <%= f.datetime_field :deadline, class: 'form-control' %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.label :urgency_importance %>
+          <%= f.select :urgency_importance, ["A","B","C","D"],{}, class: 'form-control' %>
+        </div>
 
-  <%= f.label :urgency_importance %>
-  <%= f.select :urgency_importance, ["A","B","C","D"], class: 'form-control' %>
+        <div class="col-md-6">
+          <%= f.label :status %>
+          <%= f.select :status, ["未着手","対応中","完了"],{}, class: 'form-control' %>
+        </div>
+      </div>
 
-  <%= f.label :status %>
-  <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
+      <% if !my_task?() %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.label :from %>
+            <%= f.collection_select :from, current_group.members, :id, :name, {include_blank: true}, class: 'form-control' %>
+          </div>
 
-  <% if !my_task?() %>
-    <%= f.label :from %>
-    <%= f.collection_select :from, current_group.members, :id, :name, {include_blank: true}, class: 'form-control' %>
-  
+          <div class="col-md-6">
+            <%= f.label :to %>
+            <%= f.collection_select :to, current_group.members, :id, :name,{include_blank: true}, class: 'form-control' %>
+          </div>
+        </div>
+      <% end %>
+      
+      <%= f.label :notes %>
+      <%= f.text_area :notes, class: 'form-control' %>
 
-    <%= f.label :to %>
-    <%= f.collection_select :to, current_group.members, :id, :name,{include_blank: true}, class: 'form-control' %>
-  <% end %>
-  
-  <%= f.label :notes %>
-  <%= f.text_area :notes, class: 'form-control' %>
+      <%= f.hidden_field :group_id, value:current_group.id %>
 
-  <%= f.hidden_field :group_id, value:current_group.id %>
+      <% if !my_task?() %>
+        <%= f.label :team_id %>
+        <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
+      <% end %>
 
-  <% if !my_task?() %>
-    <%= f.label :team_id %>
-    <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
-  <% end %>
+      <div>
+        <%= l(@task.created_at) %>
+        <%= l(@task.updated_at) %>
+        <span>Created by <%= @task.user.name %></span>
+      </div>
 
-  <div>
-    <%= @task.created_at %>
-    <%= @task.updated_at %>
-    <span>Created by <%= @task.user.name %></span>
+      <% if current_user?(@task.user) %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.submit "Save", class: "btn btn-primary btn-block btn-lg mb-4 mt-3" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= link_to "Delete", @task, method: :delete, data: { confirm: "削除しますか?" }, class: "btn btn-default btn-block btn-lg mb-4 mt-3" %>
+          </div>
+        </div>
+      <% else %>
+        <%= f.submit "Save", class: "btn btn-primary btn-block btn-lg mb-4 mt-3" %>
+      <% end %>
+    <% end %>
   </div>
-
-  <%= f.submit "変更を保存する", class: "btn btn-primary" %>
-<% end %>
-<% if current_user?(@task.user) %>
-  <%= link_to "タスクを削除", @task, method: :delete, data: { confirm: "削除しますか?" } %>
-<% end %>
-<button onclick="history.back()" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>

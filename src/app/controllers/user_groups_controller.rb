@@ -23,15 +23,15 @@ class UserGroupsController < ApplicationController
         @group = Group.find(@user_group.group_id)
         user_id = @user_group.user_id
         if first_user?(@group)
-            flash[:danger] = 'グループにメンバーがいなくなります'
+            flash[:danger] = 'グループにメンバーがいなくなります。グループが必要ない場合は削除してください。'
             redirect_to @group
             return
         end
 
         @user_group.destroy
         UserTeam.find_by(user_id:user_id).destroy
-        remember_group(current_user.join_groups.first)
         if User.find(user_id).id == current_user.id
+            remember_group(current_user.join_groups.first)
             redirect_to current_user
         else
             redirect_to @group

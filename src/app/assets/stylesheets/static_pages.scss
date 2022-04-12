@@ -1,6 +1,9 @@
 // Place all the styles related to the static_pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 
 @mixin box_sizing {
     -moz-box-sizing:    border-box;
@@ -9,14 +12,17 @@
 }
 
 a.task{
-    margin-bottom: 2.5px;
+    margin: 0 10% 4.5px;
     clear: both;
-    float: left;
-    width: 100%;
+    width: 80%;
+    height:30px;
     @include box_sizing;
     border: 1px solid rgb(139, 138, 138);
     border-radius: 5px;
     text-align: center;
+    display: block;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 .scroll-bar .pagination {
@@ -28,20 +34,53 @@ a.task{
     height: 600px;
 }
 
-.col-md-4 {
-    text-align: center;
-    .title{
-        display: inline-block;
-        padding: auto 10px;
-        border-radius: 5px;
-    }
-}
-
 .goals{
-    input{
-        margin-bottom: 0px;
+    table{
+        text-align: center;
     }
-    form{
-        display: inline-block;
+    .month{
+        padding-top: 2.5%;
+    }
+    .navbar{
+        background: white;
+        border: none;
+        margin-bottom: 2.5px;
+    }
+    .btn {
+        width: 102px;
+    }
+    th{
+        text-align: center;
     }
 } 
+
+.inner{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin-top: 50px;
+}
+
+.home{
+    margin-top: 10px;
+    .title{
+        text-align: center;
+        width: 30%;
+        margin: 0 36% 10px 36% ;
+        font-weight: bold;
+    }
+    .late-title{
+        border-bottom: 1px solid #ff0000;
+    }
+    .warn-title{
+        border-bottom: 1px solid #ffff00;
+    }
+    .finish-title{
+        border-bottom: 1px solid #808080;
+    }
+}

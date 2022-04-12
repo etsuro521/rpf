@@ -9,8 +9,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 RUN apt-get update
 RUN apt-get install -y vim
-RUN yarn add jquery@3.4.1 bootstrap@3.4.1
-RUN yarn add @nathanvda/cocoon
+RUN yarn add jquery bootstrap popper.js
 
 WORKDIR /app
 COPY ./src /app

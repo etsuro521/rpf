@@ -9,7 +9,7 @@ module GroupsHelper
     end
 
     def my_task?
-        current_group.name == 'マイタスク'
+        current_group.name == 'My Task'
     end
 
     def first_group?(user)

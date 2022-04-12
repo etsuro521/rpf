@@ -1,4 +1,8 @@
 class WeeklyGoalsController < ApplicationController
+    before_action :logged_in_user
+    before_action :group_member
+    before_action :store_date, except:[:store]
+
     def store
         session[:date] = params[:date]
         redirect_to (weekly_create_or_edit?(session[:date]) ? weekly_goals_path : new_weekly_goal_path)
@@ -60,10 +64,21 @@ class WeeklyGoalsController < ApplicationController
     end
 
     def destroy
-        WeeklyGoal.find(params[:id]).destroy
+        @weekly_goal = WeeklyGoal.find(params[:id])
+        week = @weekly_goal.week
+        @weekly_goal.destroy
         flash[:success] = "WeeklyGoal deleted"
+        @weekly_goal_week = stored_team.weekly_goals.where(month:stored_date,week:week)
         @weekly_goal = stored_team.weekly_goals.where(month:stored_date)
-        redirect_to (@weekly_goal.exists? ? weekly_goals_path : goals_path)
+        if @weekly_goal_week.exists?
+            redirect_to weekly_goals_path
+        elsif @weekly_goal.exists?
+            session.delete(:week)
+            session.delete(:whose)
+            redirect_to weekly_goals_path
+        else
+            redirect_to goals_path
+        end
     end
 
     private
@@ -78,4 +93,5 @@ class WeeklyGoalsController < ApplicationController
         def edit_goals_params
             params.require(:weekly_goal).permit(:team_id,:month,:week,:whose,:plan,:action,:output,:review)
         end
+
 end

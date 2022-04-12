@@ -1,3 +1,7 @@
-<h3>グループを作りますか？</h3>
-<%= link_to "Yes", new_group_path %>
-<%= link_to "No", root_path %>
+<div class="inner cover confirm">
+    <p class="lead">Create group ?</p>
+    <p class="lead">
+        <%= link_to "Yes", new_group_path, class:"btn btn-lg btn-primary" %>
+        <%= link_to "No", root_path, class:"btn btn-lg btn-default" %>
+    </p>
+</div>

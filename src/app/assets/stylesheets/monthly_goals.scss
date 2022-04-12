@@ -1,12 +1,56 @@
 // Place all the styles related to the MonthlyGoals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 .m-goals{
     overflow: scroll; 
     height: 410px;
     .goal-form{
         margin-top: 10px;
     }
+    .navbar{
+        background: white;
+        border: none;
+        margin-bottom: 2.5px;
+    }
+    .edit-link{
+        float: right;
+
+    }
 }
 
+.edit-goals{
+    .navbar{
+        background: white;
+        border: none;
+        margin-bottom: 2.5px;
+    }
+    
+}
+
+.new-goals{
+    .navbar{
+        background: white;
+        border: none;
+        margin-bottom: 2.5px;
+    }
+    .check-goal{
+        text-align: center;
+    }
+    .other-form{
+        padding-top: 17px;
+    }
+    .glyphicon{
+        padding-top: 18px;
+    }
+    .btn{
+        width: 50%;
+        margin: auto 25%;
+    }
+    .form-seelct{
+        padding-top: 10px;
+    }
+}
 

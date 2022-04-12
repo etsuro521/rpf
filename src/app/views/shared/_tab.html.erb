@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs nav-justified">
     <li role="presentation" class=<%= 'active' if current_page?(root_path) %> >   
         <%= link_to (my_task?()? 'Home' : current_team.name), root_path, class:"nav-link "%>
     </li>
@@ -10,26 +10,20 @@
     </li>
     <% if has_teams?() %>
         <li role="presentation" class=<%= 'active' if current_page?(team_path(current_team)) %>>
-            <%= link_to 'チーム詳細', team_path(current_team), class:"nav-link" %>
+            <%= link_to 'Team Detail', team_path(current_team), class:"nav-link" %>
         </li>
     <% end %>
     <% if !my_task?() %>
         <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                タスク切替 <span class="caret"></span>
+                Switch Task <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <%= form_with(url:change_tasks_path, method: :get, local: true) do |f| %>
-                        <div><%= hidden_field_tag :change, 1 %></div>
-                        <%= f.submit "自分のタスクを表示", class: "btn btn-primary" %>
-                    <% end %>
+                    <%= link_to "My Tasks", {controller: "tasks", action: "change", change:1},method: :get %>
                 </li>
                 <li>
-                    <%= form_with(url:change_tasks_path, method: :get, local: true) do |f| %>
-                        <div><%= hidden_field_tag :change, 0 %></div>
-                        <%= f.submit "#{current_team.name}のタスクを表示", class: "btn btn-primary" %>
-                    <% end %>
+                    <%= link_to "#{current_team.name} Tasks", {controller: "tasks", action: "change", change:0},method: :get %>
                 </li>
             </ul>
         </li>

@@ -1,3 +1,47 @@
 // Place all the styles related to the groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+.search {
+
+    .btn{
+        width: 100px;
+    }
+    .result{
+        padding-top: 10px;
+        h5{
+            margin-left: 30px;
+        }
+    }
+    .col-sm-10{
+        width: 600px;
+        margin-left: 30px;
+    }
+
+}
+
+.group-show {
+    .btn{
+        width: 112.26px;
+    }
+    tr:first-child {
+        td{
+            border-top: none;
+        }
+    }
+    .group-member{
+        padding: 6px 0;
+    }
+}
+
+.edit-group {
+    .btn{
+        width: 86px;
+    }
+    .col-sm-10{
+        margin-left: 10px;
+    }
+}

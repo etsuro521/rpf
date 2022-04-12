@@ -6,12 +6,12 @@ class TasksController < ApplicationController
     def index
         store_location
         if my_task?()
-            @tasks = current_group.tasks.order(updated_at: :asc).paginate(page: params[:page])
+            @tasks = current_group.tasks.order(updated_at: :asc).paginate(page: params[:page],per_page: 20)
         else
             if cookies.permanent.signed[:change] == "0"
-                @tasks = current_team.tasks.order(updated_at: :asc).paginate(page: params[:page])
+                @tasks = current_team.tasks.order(updated_at: :asc).paginate(page: params[:page],per_page: 20)
             else
-                @tasks = current_team.tasks.where(to:current_user.id).order(updated_at: :asc).paginate(page: params[:page])
+                @tasks = current_team.tasks.where(to:current_user.id).order(updated_at: :asc).paginate(page: params[:page],per_page: 20)
             end
         end
     end

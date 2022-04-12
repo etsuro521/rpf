@@ -1,6 +1,9 @@
 // Place all the styles related to the WeeklyGoals controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 .w-goals{
     label{
         display: inline-block;
@@ -24,5 +27,13 @@
 
     a{
         float: right;
+    }
+    .navbar{
+        background: white;
+        border: none;
+        margin-bottom: 2.5px;
+    }
+    .dropdown-menu a{
+        float: left !important;
     }
 }

@@ -1,0 +1,47 @@
+<div class="edit-goals">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 woocommerce">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
+                        <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
+                    </div>
+                    
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><%= link_to "Delete Goal", @monthly_goal, method: :delete, data: { confirm: "削除しますか?" } %></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </nav>            
+
+            <%= form_with(model: @monthly_goal, local: true) do |f| %>
+                <%= render 'shared/error_messages', object: f.object %>
+                <%= f.hidden_field :team_id, value:stored_team.id %>
+                <%= f.hidden_field :month, value:stored_date %>
+                
+                <%= f.label :plan %>
+                <%= f.text_field :plan, class: 'form-control' %>
+
+                <%= f.label :action %>
+                <%= f.text_field :action, class: 'form-control' %>
+
+                <%= f.label :output %>
+                <%= f.text_area :output, class: 'form-control' %>
+
+                <%= f.label :review %>
+                <%= f.text_area :review, class: 'form-control' %>
+
+                <%= f.submit "Post", class: "btn btn-primary btn-block btn-lg mb-4 mt-3" %>
+            <% end %>
+        </div>
+    </div>
+</div>

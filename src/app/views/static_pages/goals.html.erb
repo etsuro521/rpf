@@ -1,32 +1,64 @@
 <div class="goals">
-    <h3><%= stored_team.name if !my_task?()%></h3>
-    <h3><%= "#{Date.today().year}年" %></h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-            <th scope="col">月</th>
-            <th scope="col">月次目標</th>
-            <th scope="col">週次目標</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% get_months().each do |month| %>
-            <tr>
-                <th scope="row"><%= month.month %></th>
-                <td>
-                    <%= form_with(url:store_monthly_goals_path, local: true) do |f| %>
-                        <div><%= hidden_field_tag :date, month %></div>
-                        <%= f.submit (monthly_create_or_edit?(month) ? "目標一覧" : "新規作成") %>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 woocommerce">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?()%></div>
+                </div>
+
+                
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle navbar-header navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= session[:year] + "年" %><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <% get_team_month().each do |year| %>
+                                    <li><%= link_to year + "年", {controller: "monthly_goals", action: "change", team_id:stored_team.id, year:year},method: :post %></li>
+                                <% end %>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </nav>
+        
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">月</th>
+                    <th scope="col">月次目標</th>
+                    <th scope="col">週次目標</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% get_months(session[:year]).each do |month| %>
+                    <tr>
+                        <td class="month"><%= month.month %></td>
+                        <td>
+                            <%= form_with(url:store_monthly_goals_path, local: true) do |f| %>
+                                <div><%= hidden_field_tag :date, month %></div>
+                                <%= f.submit (monthly_create_or_edit?(month) ? "Goals List" : "Create Goal"),class:"btn btn-default" %>
+                            <% end %>
+                        </td>
+                        <td>
+                        <%= form_with(url:store_weekly_goals_path, local: true) do |f| %>
+                            <div><%= hidden_field_tag :date, month %></div>
+                            <%= f.submit (weekly_create_or_edit?(month) ? "Goals List" : "Create Goal"),class:"btn btn-default" %>
+                        <% end %>
+                        </td>
+                    </tr>
                     <% end %>
-                </td>
-                <td>
-                <%= form_with(url:store_weekly_goals_path, local: true) do |f| %>
-                    <div><%= hidden_field_tag :date, month %></div>
-                    <%= f.submit (weekly_create_or_edit?(month) ? "目標一覧" : "新規作成") %>
-                <% end %>
-                </td>
-            </tr>
-            <% end %>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

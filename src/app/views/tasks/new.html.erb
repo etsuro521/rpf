@@ -1,48 +1,51 @@
 <%= render 'shared/tab' %>
+<div class="row">
+        <div class="col-md-6 col-md-offset-3 woocommerce">
+                <%= form_with(model: @task, local: true) do |f| %>
+                        <%= render 'shared/error_messages', object: f.object %>
 
-<%= form_with(model: @task, local: true) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
+                        <%= f.label :title %>
+                        <%= f.text_field :title, class: 'form-control' %>
 
-        <%= f.label :title %>
-        <%= f.text_field :title, class: 'form-control' %>
+                        <%= f.label :deadline %>
+                        <%= f.datetime_field :deadline, class: 'form-control' %>
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <%= f.label :urgency_importance %>
+                                        <%= f.select :urgency_importance, ["A","B","C","D"],{}, class: 'form-control' %>
+                                </div>
+                                <div class="col-md-6">
+                                        <%= f.label :status %>
+                                        <%= f.select :status, ["未着手","対応中","完了"],{}, class: 'form-control' %>
+                                </div>
+                        </div>
 
-        <%= f.label :deadline %>
-        <%= f.datetime_field :deadline, class: 'form-control' %>
-        <div class="row">
-                <div class="col-md-6">
-                        <%= f.label :urgency_importance %>
-                        <%= f.select :urgency_importance, ["A","B","C","D"], class: 'form-control' %>
-                </div>
-                <div class="col-md-6">
-                        <%= f.label :status %>
-                        <%= f.select :status, ["未着手","対応中","完了"], class: 'form-control' %>
-                </div>
+                        <% if !my_task?() %>
+                                <div class="row">
+                                        <div class="col-md-6">
+                                                <%= f.label :from %>
+                                                <%= f.collection_select :from, current_group.members, :id, :name,{include_blank: true}, {class: 'form-control'} %>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <%= f.label :to %>
+                                                <%= f.collection_select :to, current_group.members, :id, :name,{selected:current_user.id}, {class: 'form-control'} %>
+                                        </div>
+                                </div>
+                        <% end %>
+                        
+                        <%= f.label :notes %>
+                        <%= f.text_area :notes, class: 'form-control' %>
+
+                        <%= f.hidden_field :group_id, value:current_group.id %>
+
+                        <% if !my_task?() %>
+                                <%= f.label :team_id %>
+                                <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
+                        <% else %>
+                                <%= f.hidden_field :team_id, value:current_team.id %>
+                        <% end %>
+
+                        <%= f.submit "Post", class: "btn btn-primary btn-block btn-lg mb-4 mt-3" %>
+                <% end %>
         </div>
-
-        <% if !my_task?() %>
-                <div class="row">
-                        <div class="col-md-6">
-                                <%= f.label :from %>
-                                <%= f.collection_select :from, current_group.members, :id, :name,{include_blank: true}, {class: 'form-control'} %>
-                        </div>
-                        <div class="col-md-6">
-                                <%= f.label :to %>
-                                <%= f.collection_select :to, current_group.members, :id, :name,{selected:current_user.id}, {class: 'form-control'} %>
-                        </div>
-                </div>
-        <% end %>
-        
-        <%= f.label :notes %>
-        <%= f.text_area :notes, class: 'form-control' %>
-
-        <%= f.hidden_field :group_id, value:current_group.id %>
-
-        <% if !my_task?() %>
-                <%= f.label :team_id %>
-                <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
-        <% else %>
-                <%= f.hidden_field :team_id, value:current_team.id %>
-        <% end %>
-
-        <%= f.submit "Post", class: "btn btn-primary" %>
-<% end %>
+</div>

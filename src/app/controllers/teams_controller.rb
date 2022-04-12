@@ -26,18 +26,18 @@ class TeamsController < ApplicationController
     end
 
     def change
-        team = Team.find(params[:team_id])
+        team = Team.find(params[:id])
         remember_team(team)
         redirect_to root_path
     end
 
     def search
+        @team = Team.find(params[:id])
         if params[:email].blank?
             @result_users = nil
             return @result_users
         end
         @keywords = params[:email]
-        @team = Team.find(params[:id])
         @result_users = current_group.members.where("email like ?","%"+@keywords+"%")
         
     end

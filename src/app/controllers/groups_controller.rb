@@ -68,13 +68,13 @@ class GroupsController < ApplicationController
     end
 
     def search
+        @group = Group.find(params[:id])
         if params[:email].blank?
             @result_users = nil
             return @result_users
         end
         @keywords = params[:email]
         @result_users = User.where("email like ?","%"+@keywords+"%")
-        @group = Group.find(params[:id])
     end
 
     def add

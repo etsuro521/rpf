@@ -1,26 +1,23 @@
 <%= render 'shared/tab' %>
 
-<div class="row">
+<div class="row home">
     <div class="col-md-4">
-        <p class="late title">未着手<%= @tasks.where(status:'未着手').count%></p>
+        <p class="title late-title">未着手( <%= @tasks.where(status:'未着手').count%> )</p>
         <div class="scroll-list jscroll scroll-bar">
             <%= render @tasks.where(status:'未着手') %>
-            <%= will_paginate @tasks %>
         </div>
     </div>
     <div class="col-md-4">
-        <p class="warn title">対応中<%= @tasks.where(status:'対応中').count%></p>
+        <p class="title warn-title">対応中( <%= @tasks.where(status:'対応中').count%> )</p>
         <div class="scroll-list jscroll scroll-bar">
             <%= render @tasks.where(status:'対応中') %>
-            <%= will_paginate @tasks %>
         </div>
     </div>
     
     <div class="col-md-4">
-        <p class="finish title">完了<%= @tasks.where(status:'完了').count%></p>
+        <p class="title finish-title">完了( <%= @tasks.where(status:'完了').count%> )</p>
         <div class="scroll-list jscroll scroll-bar">
             <%= render @tasks.where(status:'完了') %>
-            <%= will_paginate @tasks %>
         </div>
     </div>
 </div>

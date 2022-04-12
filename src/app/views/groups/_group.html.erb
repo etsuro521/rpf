@@ -1,18 +1,24 @@
-<tr>
-    <th scope="row"><%= group.name %></th>
-    <td>
-    <% if group.id == cookies.permanent.signed[:group_id]  %>
-        このグループを管理中
-    <% else %>
-        <%= form_with(url:change_group_path, local: true) do |f| %>
-            <div><%= hidden_field_tag :group_id, group.id %></div>
-            <%= f.submit "このグループを管理", class: "btn btn-primary" %>
-        <% end %>
-    <% end %>
-    </td>
-    <td>
-    <% if admin_user?(group,current_user) %>
-        <%= link_to '管理画面', group_path(group), class:'btn btn-primary' %>
-        <% end %>
-    </td>
-</tr>
+<table class="table">
+    <tbody>
+            <tr>
+                <td>
+                    <div class="group-name"><%= group.name %></div>
+                </td>
+                <td>
+                    <% if group.id == cookies.permanent.signed[:group_id]  %>
+                        <div class="btn btn-default">Now</div>
+                    <% else %>
+                        <%= form_with(url:change_group_path, local: true) do |f| %>
+                            <div><%= hidden_field_tag :group_id, group.id %></div>
+                            <%= f.submit "Change", class: "btn btn-primary" %>
+                        <% end %>
+                    <% end %>
+                </td>
+                <td>
+                    <% if admin_user?(group,current_user) %>
+                        <%= link_to 'Dashboard', group_path(group), class:'btn btn-primary' %>
+                    <% end %>
+                </td>
+            </tr>
+    </tbody>
+</table>

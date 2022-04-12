@@ -1,34 +1,44 @@
-<h3><%= stored_team.name if !my_task?() %></h3>
-
-<div class="container-fluid">
-    <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            <li><%= link_to "目標を追加", new_weekly_goal_path %></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= session[:week] %><span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <% get_weeks(stored_team,stored_date).each do |week| %>
-                        <li><%= link_to week.week, {controller: "weekly_goals", action: "week", week:week.week},method: :post %></li>
-                    <% end %>
-                </ul>
-            </li>
-            <% if !my_task?() %>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= get_whose_name(session[:whose]) %><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <% get_whose(stored_team,stored_date).each do |whose| %>
-                            <li><%= link_to get_whose_name(whose.whose), {controller: "weekly_goals", action: "whose", whose:whose.whose},method: :post %></li>
-                        <% end %>
-                    </ul>
-                </li>
-            <% end %>
-        </ul>
-    </div>
-</div>
 
 <div class="w-goals">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+
+                <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
+                <div class="navbar-header navbar-brand"><%= "#{stored_date.year}年#{stored_date.month}月" %></div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><%= link_to "Add Goal", new_weekly_goal_path %></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= session[:week] %><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <% get_weeks(stored_team,stored_date).each do |week| %>
+                                <li><%= link_to week.week, {controller: "weekly_goals", action: "week", week:week.week},method: :post %></li>
+                            <% end %>
+                        </ul>
+                    </li>
+                    <% if !my_task?() %>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= get_whose_name(session[:whose]) %><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <% get_whose(stored_team,stored_date).each do |whose| %>
+                                    <li><%= link_to get_whose_name(whose.whose), {controller: "weekly_goals", action: "whose", whose:whose.whose},method: :post %></li>
+                                <% end %>
+                            </ul>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <% @goals.each do |goal| %>
         <table class="table table-bordered">
             <tbody>
@@ -39,7 +49,7 @@
                         </td>
                         <td>
                             <label>Output</label>
-                            <%= link_to "編集", edit_weekly_goal_path(goal) %>
+                            <%= link_to "Edit", edit_weekly_goal_path(goal) %>
                             <p><%= goal.output %></p>
                         </td>
                     </tr>
