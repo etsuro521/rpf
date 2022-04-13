@@ -41,17 +41,27 @@
       <%= f.text_area :notes, class: 'form-control' %>
 
       <%= f.hidden_field :group_id, value:current_group.id %>
+      <%= f.hidden_field :updater, value:current_user.id %>
 
       <% if !my_task?() %>
         <%= f.label :team_id %>
         <%= f.collection_select :team_id, my_teams, :id, :name,{selected:current_team.id}, {class: 'form-control'} %>
+
+        <div class="row creater">
+          <p>Created by <%= @task.user.name %> at <%= l(@task.created_at) %></p>
+          <% if updater(@task).present? %>
+            <p>Updated by <%= updater(@task) %> at <%= l(@task.updated_at) %></p>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="row creater">
+          <p>Created at <%= l(@task.created_at) %></p>
+          <% if updater(@task).present? %>
+            <p>Updated at <%= l(@task.updated_at) %></p>
+          <% end %>
+        </div>
       <% end %>
 
-      <div>
-        <%= l(@task.created_at) %>
-        <%= l(@task.updated_at) %>
-        <span>Created by <%= @task.user.name %></span>
-      </div>
 
       <% if current_user?(@task.user) %>
         <div class="row">

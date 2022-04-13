@@ -38,6 +38,7 @@ class MonthlyGoalsController < ApplicationController
     end
 
     def show
+        @monthly_goal = MonthlyGoal.find(params[:id])
         render 'edit'
     end
 

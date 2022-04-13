@@ -5,7 +5,7 @@ ja:
   activerecord:
     attributes:
       task:
-        title: 'Task'
+        title: 'Title'
         deadline: 'Deadline'
         urgency_importance: 'Importance・Urgency'
         status: 'Status'

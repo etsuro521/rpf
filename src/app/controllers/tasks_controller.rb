@@ -2,6 +2,7 @@ class TasksController < ApplicationController
     before_action :logged_in_user
     before_action :my_task_destroy, only: :destroy
     before_action :correct_user, except: [:index,:new,:create,:change]
+    before_action :correct_task_group, only: [:show,:edit,:update]
 
     def index
         store_location
@@ -21,6 +22,7 @@ class TasksController < ApplicationController
     end
 
     def show
+        @task = Task.find(params[:id])
         render 'edit'
     end
 
@@ -61,7 +63,7 @@ class TasksController < ApplicationController
     private
 
         def task_params
-            params.require(:task).permit(:title, :deadline, :urgency_importance, :status, :notes, :group_id,:team_id, :to, :from)
+            params.require(:task).permit(:title, :deadline, :urgency_importance, :status, :notes, :group_id,:team_id, :to, :from,:updater)
         end
 
         def my_task_destroy
@@ -81,5 +83,14 @@ class TasksController < ApplicationController
                 redirect_to root_path
             end
             
+        end
+
+        def correct_task_group
+            task = Task.find_by(id:params[:id])
+            group = Group.find_by(id:task.group_id)
+            unless group.id == current_group.id
+                flash[:danger] = "This task does not belong to the group under management"
+                redirect_to current_user
+            end
         end
 end

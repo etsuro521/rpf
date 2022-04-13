@@ -15,6 +15,7 @@ class Task < ApplicationRecord
   validates :notes, length: { maximum: 255 }
   validate :after_now, on: :create
   validate :should_set_to
+  validate :should_set_from
 
 
   private
@@ -25,13 +26,13 @@ class Task < ApplicationRecord
     end
 
     def should_set_from
-      if Group.find(self.group_id).name != 'マイタスク'
+      if !self.from.present? && Group.find(self.group_id).name != 'My Task'
         errors.add(:from,"is required fields")
       end
     end
 
     def should_set_to
-      if !self.to.present? && Group.find(self.group_id).name != 'マイタスク'
+      if !self.to.present? && Group.find(self.group_id).name != 'My Task'
         errors.add(:to,"is required fields")
       end
     end

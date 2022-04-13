@@ -21,11 +21,16 @@ module MonthlyGoalsHelper
   end
 
   def get_team_month()
-    goals_month =  stored_team.weekly_goals.pluck(:month)
+    goals_month = stored_team.weekly_goals.pluck(:month)
     result = goals_month.group_by { |a| a.strftime('%Y') }.map do |year, array|
       [year, array.count]
     end.to_h
     result.keys
+  end
+
+  def year_len()
+    team_month = get_team_month()
+    team_month.length
   end
   
 end

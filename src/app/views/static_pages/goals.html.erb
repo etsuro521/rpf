@@ -19,14 +19,18 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle navbar-header navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= session[:year] %><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <% get_team_month().each do |year| %>
-                                    <li><%= link_to year, {controller: "monthly_goals", action: "change", team_id:stored_team.id, year:year},method: :post %></li>
-                                <% end %>
-                            </ul>
-                        </li>
+                        <% if year_len() > 1 %>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle navbar-header navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= session[:year] %><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <% get_team_month().each do |year| %>
+                                        <li><%= link_to year, {controller: "monthly_goals", action: "change", team_id:stored_team.id, year:year},method: :post %></li>
+                                    <% end %>
+                                </ul>
+                            </li>
+                        <% else %>
+                            <div class="navbar-header navbar-brand"><%= session[:year] %></div>
+                        <% end %>
                     </ul>
                 </div>
                 </div>

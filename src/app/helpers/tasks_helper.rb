@@ -25,4 +25,9 @@ module TasksHelper
         user = User.find_by(id:task.to)
         name = user.nil? ? "" : user.name
     end
+
+    def updater(task)
+        user = User.find_by(id:task.updater)
+        name = user.nil? ? "" : user.name
+    end
 end

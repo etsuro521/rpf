@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <% if !my_task?() %>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teams <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tasks <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <% my_teams.each do |team| %>
                                     <li><%= link_to team.name, {controller: "teams", action: "change", id:team.id},method: :post %></li>
@@ -21,10 +21,14 @@
                                 <li><%= link_to "Create Team", new_team_path %></li>
                             </ul>
                     </li>
+                <% else %>
+                    <% my_teams.each do |team| %>
+                        <li><%= link_to "Tasks", {controller: "teams", action: "change", id:team.id},method: :post %></li>
+                    <% end %>
                 <% end %>
                 <% current_group.teams.each do |team| %>
                     <% if my_task?() %>
-                        <li class="nav-item"><%= link_to "Monthly/Weekly Goals", {controller: "monthly_goals", action: "change", team_id:team.id, year:Date.today.year},method: :post %></li>
+                        <li class="nav-item"><%= link_to "Goals", {controller: "monthly_goals", action: "change", team_id:team.id, year:Date.today.year},method: :post %></li>
                     <% elsif team.name != "general" %>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Goals <span class="caret"></span></a>

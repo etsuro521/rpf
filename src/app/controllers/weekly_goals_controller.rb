@@ -40,6 +40,7 @@ class WeeklyGoalsController < ApplicationController
     end
 
     def show
+        @weekly_goal = WeeklyGoal.find(params[:id])
         render 'edit'
     end
 
