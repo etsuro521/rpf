@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
     before_action :logged_in_user
     before_action :user_has_group, only:[:new,:create,:destroy]
-    before_action :user_added_team, except:[:new,:create,:confirm,:destroy]
+    before_action :user_added_team, except:[:new,:create,:confirm]
 
     def new
         @team = current_group.teams.build
@@ -68,14 +68,20 @@ class TeamsController < ApplicationController
     end
 
     def destroy
-        Team.find(params[:id]).destroy
-        flash[:success] = 'Team deleted'
-        if !current_user.join_teams.empty?
-            remember_team(current_user.join_teams.first)
+        @team = Team.find(params[:id])
+        if @team.name == "general"
+            flash[:danger] = "You cannot delete this team"
+            redirect_to @team
         else
-            cookies.delete :team_id
+            @team.destroy
+            flash[:success] = 'Team deleted'
+            if !current_user.join_teams.empty?
+                remember_team(current_user.join_teams.first)
+            else
+                cookies.delete :team_id
+            end
+            redirect_to root_path
         end
-        redirect_to root_path
     end
 
     def confirm

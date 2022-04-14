@@ -26,17 +26,19 @@
                         <li><%= link_to "Tasks", {controller: "teams", action: "change", id:team.id},method: :post %></li>
                     <% end %>
                 <% end %>
-                <% current_group.teams.each do |team| %>
-                    <% if my_task?() %>
+                <% if my_task?() %>
+                    <% current_group.teams.each do |team| %>
                         <li class="nav-item"><%= link_to "Goals", {controller: "monthly_goals", action: "change", team_id:team.id, year:Date.today.year},method: :post %></li>
-                    <% elsif team.name != "general" %>
+                    <% end %>
+                <% else %>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Goals <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><%= link_to team.name, {controller: "monthly_goals", action: "change", team_id:team.id, year:Date.today.year},method: :post %></li>
+                                    <% current_group.teams.each do |team| %>
+                                        <li><%= link_to team.name, {controller: "monthly_goals", action: "change", team_id:team.id, year:Date.today.year},method: :post %></li>
+                                    <% end %>
                                 </ul>
                         </li>
-                    <% end %>
                 <% end %>
                 <li class="nav-item"><%= link_to current_user.name, current_user, class:"nav-link" %></li>
             </ul>

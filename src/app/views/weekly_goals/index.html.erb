@@ -10,8 +10,12 @@
                 <span class="icon-bar"></span>
                 </button>
 
-                <div class="navbar-header navbar-brand"><%= stored_team.name if !my_task?() %></div>
-                <div class="navbar-header navbar-brand"><%= "#{stored_date.year}/#{stored_date.month}" %></div>
+                <div class="navbar-header navbar-brand"><%= link_to stored_team.name, goals_path if !my_task?() %></div>
+                <% if !my_task?() %>
+                    <div class="navbar-header navbar-brand"><%= "#{stored_date.year}/#{stored_date.month}" %></div>
+                <% else %>
+                    <div class="navbar-header navbar-brand"><%= link_to "#{stored_date.year}/#{stored_date.month}", goals_path %></div>
+                <% end %>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
